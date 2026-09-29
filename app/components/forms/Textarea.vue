@@ -1,14 +1,17 @@
 <template>
     <div :class="baseClass" >
         <label v-if="label" class="font-bold" :for="id">{{ label }}</label>
-        <div :class="['base-text-input mt-1', errorClass]">
+        <div :class="['base-text-input base-textarea mt-1', errorClass]">
             <component :is="preIcon" />
-            <input 
+            <textarea
                 :id="id"
-                type="text"
                 v-model="text"
                 :placeholder="placeholder"
                 :disabled="disabled"
+                :rows="rows"
+                :class="{
+                    '!resize-none': locked
+                }"
             />
             <component :is="postIcon" />
         </div>
@@ -17,11 +20,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { TextInput } from '~/types/forms/textInput';
+import type { Textarea } from '~/types/forms/textarea';
 import { useFormControl } from '~/composables/useFormControl';
 
-const props = withDefaults(defineProps<TextInput>(), {
-    placeholder: "Add text here"
+const props = withDefaults(defineProps<Textarea>(), {
+    placeholder: "Add text here",
+    rows: 4,
 });
 
 const text = defineModel<string>();
