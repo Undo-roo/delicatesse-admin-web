@@ -2,6 +2,7 @@
     <div class="px-2 py-5 w-full">
         <h1 class="!mb-12">Project UI Components</h1>
 
+        <!-- INPUT -->
         <div class="bg-primary-700 px-2 py-5 mb-8">
             <h2 class="text-white my-auto">INPUT</h2>
         </div>
@@ -16,6 +17,18 @@
                 </div>
                 <forms-text-input label="Error State" error="Error text here" />
                 <forms-text-input label="Disabled State" disabled />
+                <forms-text-input pre-icon="boxicons:alert-circle-filled" label="Pre Icon State" />
+                <forms-text-input post-icon="boxicons:chevron-down" label="Post Icon State" />
+                <forms-text-input pre-icon="boxicons:search" post-icon="boxicons:chevron-down" label="Both Icons" />
+            </div>
+        </div>
+
+        <!-- Text Input -->
+        <div class="mb-4">
+            <h3>Number Input</h3>
+
+            <div class="grid grid-cols-6 mt-4 gap-4">
+                
             </div>
         </div>
 
@@ -56,6 +69,71 @@
                 <forms-multiselect v-model="multiValue5" :options="[]" label="Searchable (fetch)" searchable :fetch-options="fetchOptions" />
             </div>
         </div>
+
+        <!-- Button -->
+        <div class="mb-4">
+            <h3>Button</h3>
+
+            <div class="grid grid-cols-6 mt-4 gap-4">
+                <forms-button text="Default State" pre-icon="boxicons:alert-circle-filled" />
+                <forms-button text="Outline" variant="outline" />
+                <forms-button text="Ghost" variant="ghost" />
+                <forms-button text="Secondary" variant="secondary" />
+                <forms-button text="Destructive" variant="destructive" />
+                <forms-button text="Link" variant="link" />
+                <forms-button text="Disabled" disabled />
+            </div>
+        </div>
+
+        <!-- PRESETS -->
+        <div class="bg-primary-700 px-2 py-5 mb-8">
+            <h2 class="text-white my-auto">Presets</h2>
+        </div>
+
+        <!-- Datatable -->
+        <div class="mb-4">
+            <h3>Datatable</h3>
+
+            <div class="grid grid-cols-6 mt-4 gap-4">
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="mb-4">
+            <h3>Modal</h3>
+        </div>
+
+        <!-- Modal -->
+        <div class="mb-4">
+            <h3>Alert Dialog</h3>
+        </div>
+
+        <!-- Panel Sheets -->
+        <div class="mb-4">
+            <h3>Alert Dialog</h3>
+        </div>
+
+        <!-- Status Pill -->
+        <div class="mb-4">
+            <h3>Alert Dialog</h3>
+        </div>
+
+        <!-- Status Pill -->
+        <div class="mb-4">
+            <h3>Status Pill</h3>
+        </div>
+
+        <!-- Formatter -->
+        <div class="bg-primary-700 px-2 py-5 mb-8">
+            <h2 class="text-white my-auto">Formatter</h2>
+        </div>
+
+        <!-- Status Pill -->
+        <div class="mb-4">
+            <h3>Number Formatter</h3>
+        </div>
+
+
     </div>
 </template>
 

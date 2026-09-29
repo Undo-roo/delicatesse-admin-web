@@ -8,7 +8,7 @@
             @click="onBoxClick"
         >
             <component v-if="preIcon" :is="preIcon" />
-            <span v-if="selectedLabel" class="base-select__value">{{ selectedLabel }}</span>
+            <span v-if="model" class="base-select__value">{{ model.label }}</span>
             <span v-else class="base-select__placeholder">{{ placeholder }}</span>
             <component v-if="postIcon" :is="postIcon" />
 
@@ -41,58 +41,33 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue';
+import { ref, nextTick } from 'vue';
 import type { Select, SelectOption } from '~/types/forms/select';
 import { useFormControl } from '~/composables/useFormControl';
-import { useSearchableOptions } from '~/composables/useSearchableOptions';
+import { useSelectableOptions } from '~/composables/useSelectableOptions';
 
 const props = withDefaults(defineProps<Select>(), {
     placeholder: "Select…",
 });
 
-const model = defineModel<any>();
+const model = defineModel<SelectOption>();
 
 const { id, errorClass } = useFormControl(() => props.error);
 
-const open = ref(false);
-const rootEl = ref<HTMLElement>();
 const searchInput = ref<HTMLInputElement>();
 
-const { query, results, loading } = useSearchableOptions(
+const { open, rootEl, toggle, query, results, loading, isSelected, select } = useSelectableOptions(
     () => props.options,
     props.fetchOptions,
+    model,
+    false,
 );
-
-const selectedLabel = computed(() => {
-    if (model.value === undefined || model.value === null) return '';
-    const found = props.options.find((o) => o.value === model.value);
-    return found?.label ?? String(model.value);
-});
-
-function isSelected(opt: SelectOption) {
-    return opt.value === model.value;
-}
-
-function select(opt: SelectOption) {
-    model.value = opt.value;
-    open.value = false;
-    query.value = '';
-}
 
 function onBoxClick() {
     if (props.disabled) return;
-    open.value = !open.value;
+    toggle();
     if (open.value && props.searchable) {
         nextTick(() => searchInput.value?.focus());
     }
 }
-
-function onClickOutside(e: MouseEvent) {
-    if (rootEl.value && !rootEl.value.contains(e.target as Node)) {
-        open.value = false;
-    }
-}
-
-onMounted(() => document.addEventListener('click', onClickOutside));
-onUnmounted(() => document.removeEventListener('click', onClickOutside));
 </script>

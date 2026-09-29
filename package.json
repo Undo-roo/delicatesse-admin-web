@@ -17,6 +17,7 @@
     "vue-router": "^5.3.1"
   },
   "devDependencies": {
+    "@iconify-json/boxicons": "^1.2.0",
     "@types/lodash": "^4.17.25",
     "@unocss/nuxt": "^66.10.5",
     "typescript": "^5.9.3",

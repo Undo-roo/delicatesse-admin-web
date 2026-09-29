@@ -76,7 +76,8 @@ export default defineConfig({
         .base-text-input input,
         .base-textarea textarea {
           outline: none;
-          min-width: 100%;
+          flex: 1;
+          min-width: 0;
         }
 
         .base-textarea textarea {

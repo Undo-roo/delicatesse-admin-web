@@ -1,8 +1,6 @@
-import type { FunctionalComponent } from "vue";
-
 export interface TextInput {
-    preIcon?: FunctionalComponent;
-    postIcon?: FunctionalComponent;
+    preIcon?: string;
+    postIcon?: string;
     placeholder?: string;
     error?: string;
     label?: string;
