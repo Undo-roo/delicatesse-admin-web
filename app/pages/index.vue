@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-red-50">
-    titefawef awfnwefnaweofnweaiofnweaionfwe
-  </div>
+  titefawef awfnwefnaweofnweaiofnweaionfwe
+
+  <a href="#">test</a>
 </template>
 
 <script lang="ts" setup>
