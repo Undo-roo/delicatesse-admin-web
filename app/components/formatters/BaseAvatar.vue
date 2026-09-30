@@ -2,7 +2,7 @@
     <div class="inline-flex items-center gap-2">
         <div class="overflow-hidden rounded bg-lightGray" :style="{ width: `${size}px`, height: `${size}px` }">
             <img v-if="src" :src="src" :alt="name" class="w-full h-full object-cover" />
-            <div v-else class="w-full h-full flex items-center justify-center text-[12px] font-bold text-darkGray">
+            <div v-else class="w-full h-full flex items-center justify-center text-white font-bold bg-primary">
                 {{ initials }}
             </div>
         </div>
@@ -15,7 +15,7 @@ import type { BaseAvatar } from '~/types/formatters/baseAvatar';
 
 const props = withDefaults(defineProps<BaseAvatar>(), {
     name: '',
-    size: 28,
+    size: 40,
 });
 
 const initials = computed(() => {

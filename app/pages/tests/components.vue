@@ -2,6 +2,13 @@
     <div class="px-2 py-5 w-full">
         <h1 class="!mb-12">Project UI Components</h1>
 
+        <!-- HEADER -->
+        <div class="bg-primary-700 px-2 py-5 mb-8">
+            <h2 class="text-white my-auto">HEADER</h2>
+        </div>
+
+        <layout-header class="mb-8" />
+
         <!-- INPUT -->
         <div class="bg-primary-700 px-2 py-5 mb-8">
             <h2 class="text-white my-auto">INPUT</h2>
@@ -42,6 +49,40 @@
                 <forms-date-input label="Default State" />
                 <forms-date-input label="With Timer" has-time />
                 <forms-date-input label="Disabled State" disabled />
+            </div>
+        </div>
+
+        <!-- Toggle -->
+        <div class="mb-4">
+            <h3>Toggle</h3>
+
+            <div class="grid grid-cols-6 mt-4 gap-4">
+                <forms-toggle v-model="toggleValue" label="Default State" icon="boxicons:lock-keyhole" />
+                <forms-toggle v-model="toggleValue2" label="Square" shape="square" icon="boxicons:lock-keyhole" />
+                <forms-toggle v-model="toggleValue3" label="Disabled State" disabled icon="boxicons:lock-keyhole" />
+                <forms-toggle v-model="toggleValue4" label="No Icon" />
+            </div>
+        </div>
+
+        <!-- Checkbox -->
+        <div class="mb-4">
+            <h3>Checkbox</h3>
+
+            <div class="grid grid-cols-6 mt-4 gap-4">
+                <forms-checkbox v-model="checkboxValue" label="Default State" />
+                <forms-checkbox v-model="checkboxValue2" label="Error State" error="Error text here" />
+                <forms-checkbox v-model="checkboxValue3" label="Disabled State" disabled />
+            </div>
+        </div>
+
+        <!-- Radio -->
+        <div class="mb-4">
+            <h3>Radio</h3>
+
+            <div class="grid grid-cols-6 mt-4 gap-4">
+                <forms-radio v-model="radioValue" value="option-a" label="Option A" />
+                <forms-radio v-model="radioValue" value="option-b" label="Option B" />
+                <forms-radio v-model="radioValue" value="option-c" label="Disabled State" disabled />
             </div>
         </div>
 
@@ -297,5 +338,16 @@ const toasts = reactive({
     bottomMiddle: false,
     bottomRight: false,
 });
+
+const toggleValue = ref(true);
+const toggleValue2 = ref(false);
+const toggleValue3 = ref(true);
+const toggleValue4 = ref(false);
+
+const checkboxValue = ref(true);
+const checkboxValue2 = ref(false);
+const checkboxValue3 = ref(true);
+
+const radioValue = ref('option-a');
 
 </script>
