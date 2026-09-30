@@ -28,6 +28,20 @@ const general = {
   error: "#b91c1c",
 }
 
+const status = {
+  default: "#F1F1F1",
+  red: "#FF454E",
+  black: "#2D262E",
+  blue: "#2E5BFF",
+  gray: "#AEAEAE",
+  green: "#88E34D",
+  'light-blue': "#87CEEB",
+  orange: "#FFA500",
+  pink: "#F5A4C5",
+  teal: "#20C997",
+  yellow: "#FDF264",
+}
+
 export default defineConfig({
   presets: [
     presetWind4(),
@@ -45,6 +59,7 @@ export default defineConfig({
       lightGray: general['lightGray'],
       white: general['white'],
       error: general['error'],
+      status,
     },
   },
   preflights: [
