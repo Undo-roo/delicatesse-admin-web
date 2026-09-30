@@ -8,7 +8,7 @@
         >
             <Icon
                 :name="selected ? 'boxicons:radio-circle-marked' : 'boxicons:radio-circle'"
-                class="size-5 flex-shrink-0"
+                class="size-6 flex-shrink-0"
                 :class="selected ? 'text-primary' : 'text-gray'"
             />
             <span v-if="label" class="font-bold text-black">{{ label }}</span>

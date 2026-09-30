@@ -8,7 +8,7 @@
         >
             <Icon
                 :name="model ? 'boxicons:checkbox-square' : 'boxicons:checkbox'"
-                class="size-5 flex-shrink-0"
+                class="size-6 flex-shrink-0"
                 :class="model ? 'text-primary' : 'text-gray'"
             />
             <span v-if="label" class="font-bold text-black">{{ label }}</span>

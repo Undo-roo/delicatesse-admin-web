@@ -86,6 +86,25 @@
             </div>
         </div>
 
+        <!-- File Input -->
+        <div class="mb-4">
+            <h3>File Input</h3>
+
+            <div class="grid grid-cols-3 mt-4 gap-4">
+                <forms-file-input v-model="fileValue" label="Proof of payment" description="Upload proof of payment" />
+                <forms-file-input v-model="fileValue2" label="Disabled State" disabled />
+            </div>
+        </div>
+
+        <!-- Multi File Input -->
+        <div class="mb-4">
+            <h3>Multi File Input</h3>
+
+            <div class="mt-4">
+                <forms-multi-file-input v-model="multiFileValue" label="Product Images" />
+            </div>
+        </div>
+
         <!-- Select -->
         <div class="mb-4">
             <h3>Select</h3>
@@ -349,5 +368,9 @@ const checkboxValue2 = ref(false);
 const checkboxValue3 = ref(true);
 
 const radioValue = ref('option-a');
+
+const fileValue = ref<File | null>(null);
+const fileValue2 = ref<File | null>(null);
+const multiFileValue = ref<(File | null)[]>([]);
 
 </script>
