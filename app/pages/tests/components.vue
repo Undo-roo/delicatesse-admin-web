@@ -114,11 +114,21 @@
         <div class="mb-4">
             <h3>Toast</h3>
 
-            <div class="flex flex-col gap-4 mt-4">
-                <modals-toast title="Success Title" description="Insert Success Toast Description Here" variant="success" />
-                <modals-toast title="Error Title" description="Insert Error Toast Description Here" variant="error" />
-                <modals-toast title="Information Title" description="Insert Information Toast Description Here" variant="info" />
+            <div class="flex flex-wrap gap-4 mt-4">
+                <forms-button text="Top Left" @click="toasts.topLeft = true" />
+                <forms-button text="Top Middle" variant="outline" @click="toasts.topMiddle = true" />
+                <forms-button text="Top Right" variant="outline" @click="toasts.topRight = true" />
+                <forms-button text="Bottom Left" variant="outline" @click="toasts.bottomLeft = true" />
+                <forms-button text="Bottom Middle" variant="outline" @click="toasts.bottomMiddle = true" />
+                <forms-button text="Bottom Right" variant="outline" @click="toasts.bottomRight = true" />
             </div>
+
+            <modals-toast v-model="toasts.topLeft" position="top-left" variant="success" title="Success Title" description="Insert Success Toast Description Here" />
+            <modals-toast v-model="toasts.topMiddle" position="top-middle" variant="error" title="Error Title" description="Insert Error Toast Description Here" />
+            <modals-toast v-model="toasts.topRight" position="top-right" variant="info" title="Information Title" description="Insert Information Toast Description Here" />
+            <modals-toast v-model="toasts.bottomLeft" position="bottom-left" variant="success" title="Success Title" description="Insert Success Toast Description Here" />
+            <modals-toast v-model="toasts.bottomMiddle" position="bottom-middle" variant="error" title="Error Title" description="Insert Error Toast Description Here" />
+            <modals-toast v-model="toasts.bottomRight" position="bottom-right" variant="info" title="Information Title" description="Insert Information Toast Description Here" />
         </div>
 
         <!-- Modal -->
@@ -285,5 +295,14 @@ function openSheet(side: 'left' | 'right' | 'bottom') {
     sheetSide.value = side;
     sheetOpen.value = true;
 }
+
+const toasts = reactive({
+    topLeft: false,
+    topMiddle: false,
+    topRight: false,
+    bottomLeft: false,
+    bottomMiddle: false,
+    bottomRight: false,
+});
 
 </script>

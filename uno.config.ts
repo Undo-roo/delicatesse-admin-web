@@ -51,6 +51,14 @@ export default defineConfig({
     fontFamily: {
       sans: ["'Helvetica Neue'", 'Helvetica', 'Arial', 'sans-serif'],
     },
+    text: {
+      xs: { fontSize: '12px', lineHeight: '16px' },
+      sm: { fontSize: '14px', lineHeight: '20px' },
+      base: { fontSize: '16px', lineHeight: '24px' },
+      md: { fontSize: '18px', lineHeight: '28px' },
+      lg: { fontSize: '20px', lineHeight: '28px' },
+      xl: { fontSize: '24px', lineHeight: '32px' },
+    },
     colors: { 
       primary,
       black: general['black'],
