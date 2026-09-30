@@ -110,25 +110,9 @@
             <presets-data-table :columns="tableColumns" :rows="tableRows" />
         </div>
 
-        <!-- Toast -->
-        <div class="mb-4">
-            <h3>Toast</h3>
-
-            <div class="flex flex-wrap gap-4 mt-4">
-                <forms-button text="Top Left" @click="toasts.topLeft = true" />
-                <forms-button text="Top Middle" variant="outline" @click="toasts.topMiddle = true" />
-                <forms-button text="Top Right" variant="outline" @click="toasts.topRight = true" />
-                <forms-button text="Bottom Left" variant="outline" @click="toasts.bottomLeft = true" />
-                <forms-button text="Bottom Middle" variant="outline" @click="toasts.bottomMiddle = true" />
-                <forms-button text="Bottom Right" variant="outline" @click="toasts.bottomRight = true" />
-            </div>
-
-            <modals-toast v-model="toasts.topLeft" position="top-left" variant="success" title="Success Title" description="Insert Success Toast Description Here" />
-            <modals-toast v-model="toasts.topMiddle" position="top-middle" variant="error" title="Error Title" description="Insert Error Toast Description Here" />
-            <modals-toast v-model="toasts.topRight" position="top-right" variant="info" title="Information Title" description="Insert Information Toast Description Here" />
-            <modals-toast v-model="toasts.bottomLeft" position="bottom-left" variant="success" title="Success Title" description="Insert Success Toast Description Here" />
-            <modals-toast v-model="toasts.bottomMiddle" position="bottom-middle" variant="error" title="Error Title" description="Insert Error Toast Description Here" />
-            <modals-toast v-model="toasts.bottomRight" position="bottom-right" variant="info" title="Information Title" description="Insert Information Toast Description Here" />
+        <!-- MODALS -->
+        <div class="bg-primary-700 px-2 py-5 mb-8">
+            <h2 class="text-white my-auto">MODALS</h2>
         </div>
 
         <!-- Modal -->
@@ -161,9 +145,25 @@
             </modals-sheet>
         </div>
 
-        <!-- Status Pill -->
+        <!-- Toast -->
         <div class="mb-4">
-            <h3>Alert Dialog</h3>
+            <h3>Toast</h3>
+
+            <div class="flex flex-wrap gap-4 mt-4">
+                <forms-button text="Top Left" @click="toasts.topLeft = true" />
+                <forms-button text="Top Middle" variant="outline" @click="toasts.topMiddle = true" />
+                <forms-button text="Top Right" variant="outline" @click="toasts.topRight = true" />
+                <forms-button text="Bottom Left" variant="outline" @click="toasts.bottomLeft = true" />
+                <forms-button text="Bottom Middle" variant="outline" @click="toasts.bottomMiddle = true" />
+                <forms-button text="Bottom Right" variant="outline" @click="toasts.bottomRight = true" />
+            </div>
+
+            <modals-toast v-model="toasts.topLeft" position="top-left" variant="success" title="Success Title" description="Insert Success Toast Description Here" />
+            <modals-toast v-model="toasts.topMiddle" position="top-middle" variant="error" title="Error Title" description="Insert Error Toast Description Here" />
+            <modals-toast v-model="toasts.topRight" position="top-right" variant="info" title="Information Title" description="Insert Information Toast Description Here" />
+            <modals-toast v-model="toasts.bottomLeft" position="bottom-left" variant="success" title="Success Title" description="Insert Success Toast Description Here" />
+            <modals-toast v-model="toasts.bottomMiddle" position="bottom-middle" variant="error" title="Error Title" description="Insert Error Toast Description Here" />
+            <modals-toast v-model="toasts.bottomRight" position="bottom-right" variant="info" title="Information Title" description="Insert Information Toast Description Here" />
         </div>
 
         <!-- Formatter -->
@@ -222,13 +222,6 @@
                 <formatters-base-avatar name="Hwang Yeji" src="https://i.pravatar.cc/100" />
             </div>
         </div>
-
-        <!-- Number Formatter -->
-        <div class="mb-4">
-            <h3>Number Formatter</h3>
-        </div>
-
-
     </div>
 </template>
 
