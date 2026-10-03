@@ -8,7 +8,7 @@
             <div class="w-full max-w-[420px] rounded-lg bg-white p-3">
                 <div class="mb-3 flex items-center justify-between">
                     <p class="text-[12px] font-bold text-black">{{ title }}</p>
-                    <button type="button" class="flex-shrink-0" @click="close">
+                    <button type="button" class="flex-shrink-0 cursor-pointer" @click="close">
                         <Icon name="boxicons:x" class="size-4 text-black" />
                     </button>
                 </div>

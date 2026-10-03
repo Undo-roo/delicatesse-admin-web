@@ -11,7 +11,7 @@
                         class="base-multiselect__chip"
                     >
                         {{ opt.label }}
-                        <button type="button" class="base-multiselect__chip-remove" @click.stop="select(opt)"> <Icon name="boxicons:x-filled" /></button>
+                        <button type="button" class="base-multiselect__chip-remove" :disabled="disabled" @click.stop="select(opt)"> <Icon name="boxicons:x-filled" /></button>
                     </span>
                 </div>
                 <span v-else class="text-darkGray">{{ placeholder }}</span>

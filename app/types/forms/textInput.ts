@@ -6,4 +6,7 @@ export interface TextInput {
     label?: string;
     baseClass?: string;
     disabled?: boolean;
+    type?: string;
+    preIconClass?: string;
+    postIconClass?: string;
 }

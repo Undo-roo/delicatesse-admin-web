@@ -9,7 +9,7 @@
                         <p class="text-md font-bold" :style="{color: variantConfig.color}">{{ title }}</p>
                         <p v-if="description" class="text-sm font-medium text-black word-wrap">{{ description }} </p>
                     </div>
-                    <button v-if="showClose" type="button" class="ml-auto flex-shrink-0 self-start" @click="close">
+                    <button v-if="showClose" type="button" class="ml-auto flex-shrink-0 cursor-pointer self-start" @click="close">
                         <Icon name="boxicons:x" class="size-4 text-black" />
                     </button>
                 </div>
