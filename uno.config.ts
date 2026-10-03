@@ -76,7 +76,6 @@ export default defineConfig({
         .base-text-input,
         .base-select,
         .base-textarea {
-          border: 2px solid ${general.gray};
           border-radius: 8px;
           min-height: 40px;
           padding: 12px;
@@ -89,6 +88,11 @@ export default defineConfig({
         .base-textarea:has(textarea:disabled) {
           border: 2px solid ${general.lightGray} !important;
           background-color: #f0f0f0;
+        }
+
+        .base-text-input input:disabled,
+        .base-textarea textarea:disabled {
+          cursor: not-allowed;
         }
 
         .base-text-input:has(input:focus),
@@ -134,7 +138,7 @@ export default defineConfig({
         .base-select.is-disabled {
           border-color: ${general.lightGray};
           background-color: #f0f0f0;
-          cursor: default;
+          cursor: not-allowed;
         }
 
         .base-select.is-open {
@@ -231,6 +235,10 @@ export default defineConfig({
         .base-multiselect.is-disabled .base-multiselect__control {
           border-color: ${general.lightGray};
           background-color: #f0f0f0;
+          cursor: not-allowed;
+        }
+
+        .base-multiselect.is-disabled .base-multiselect__chip-remove {
           cursor: not-allowed;
         }
 

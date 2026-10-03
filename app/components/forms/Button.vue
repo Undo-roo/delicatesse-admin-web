@@ -21,7 +21,7 @@ const baseStyle = 'h-[40px] p-2 rounded-lg inline-flex items-center justify-cent
 const variantClasses: Record<NonNullable<Button['variant']>, string> = {
     default: 'bg-primary hover:bg-primary-800 text-white',
     outline: 'border border-primary text-primary hover:bg-primary-50 bg-white',
-    ghost: 'text-primary hover:bg-primary-50 bg-white',
+    ghost: 'text-black hover:bg-primary-50 bg-white',
     secondary: 'bg-lightGray text-darkGray hover:bg-gray',
     destructive: 'bg-error hover:bg-red-800 text-white',
     link: 'text-primary underline hover:text-primary-800',

@@ -6,5 +6,13 @@ export default defineNuxtConfig({
   modules: [
     '@unocss/nuxt',
     '@nuxt/icon'
-  ]
+  ],
+  runtimeConfig: {
+    // Private (server-only) — never sent to the browser.
+    apiSecret: '',
+    // Public (exposed to the browser) — override with NUXT_PUBLIC_API_BASE.
+    public: {
+      apiBase: '',
+    },
+  },
 })

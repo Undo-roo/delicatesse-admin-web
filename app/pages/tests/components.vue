@@ -167,7 +167,9 @@
         <div class="mb-4">
             <h3>Datatable</h3>
 
-            <presets-data-table :columns="tableColumns" :rows="tableRows" />
+            <forms-filter v-model="tableFilter" placeholder="Search by name" class="mb-4 max-w-md" />
+
+            <presets-data-table :columns="tableColumns" :rows="tableRows" :filter="tableFilter" :page-size="5" />
         </div>
 
         <!-- MODALS -->
@@ -287,6 +289,9 @@
 
 <script lang="ts" setup>
 
+import { h } from 'vue';
+import StatusPill from '~/components/formatters/StatusPill.vue';
+
 const isFocused = ref(false);
 
 const textInputLbl = computed(() => {
@@ -300,10 +305,24 @@ const options = [
     { value: 4, label: "Option Four" },
 ];
 
+const statusVariantMap: Record<string, string> = {
+    'In Stock': 'green',
+    'Low Stock': 'yellow',
+    'Out of Stock': 'red',
+};
+
 const tableColumns = [
     { key: 'name', label: 'Name' },
     { key: 'category', label: 'Category' },
-    { key: 'status', label: 'Status' },
+    {
+        key: 'status',
+        label: 'Status',
+        cell: ({ row }: any) => h(StatusPill, {
+            text: row.original.status,
+            variant: statusVariantMap[row.original.status] ?? 'default',
+            showIcon: false,
+        }),
+    },
     { key: 'price', label: 'Price' },
     { key: 'stock', label: 'Stock' },
 ];
@@ -314,7 +333,16 @@ const tableRows = [
     { name: 'Baguette', category: 'Bakery', status: 'Out of Stock', price: '₱ 85', stock: 0 },
     { name: 'Olive Oil', category: 'Pantry', status: 'In Stock', price: '₱ 450', stock: 24 },
     { name: 'Truffle Honey', category: 'Pantry', status: 'In Stock', price: '₱ 780', stock: 12 },
+    { name: 'Camembert', category: 'Dairy', status: 'Low Stock', price: '₱ 210', stock: 5 },
+    { name: 'Sourdough', category: 'Bakery', status: 'In Stock', price: '₱ 140', stock: 30 },
+    { name: 'Parmesan', category: 'Dairy', status: 'In Stock', price: '₱ 380', stock: 40 },
+    { name: 'Salami', category: 'Meat', status: 'Out of Stock', price: '₱ 260', stock: 0 },
+    { name: 'Balsamic Vinegar', category: 'Pantry', status: 'In Stock', price: '₱ 320', stock: 18 },
+    { name: 'Fig Jam', category: 'Pantry', status: 'Low Stock', price: '₱ 195', stock: 6 },
+    { name: 'Chorizo', category: 'Meat', status: 'In Stock', price: '₱ 290', stock: 22 },
 ];
+
+const tableFilter = ref('');
 
 const selectValue = ref();
 const selectValue2 = ref();

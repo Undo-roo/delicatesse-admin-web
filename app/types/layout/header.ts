@@ -2,6 +2,12 @@ export interface HeaderNavItem {
     label: string;
     to?: string;
     active?: boolean;
+    children?: HeaderNavItem[];
+}
+
+export interface HeaderProfileItem {
+    label: string;
+    to?: string;
 }
 
 export interface Header {
@@ -11,4 +17,5 @@ export interface Header {
     navItems?: HeaderNavItem[];
     avatar?: string;
     name?: string;
+    profileItems?: HeaderProfileItem[];
 }
