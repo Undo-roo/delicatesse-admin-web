@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     apiSecret: '',
     // Public (exposed to the browser) — override with NUXT_PUBLIC_API_BASE.
     public: {
-      apiBase: '',
+      apiBase: process.env.ADMIN_API_LINK,
     },
   },
 })

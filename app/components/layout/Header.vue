@@ -1,8 +1,8 @@
 <template>
-    <header class="w-full bg-primary-700">
+    <header class="w-full bg-primary-700 shadow">
         <div class="flex items-center justify-between gap-6 px-10 py-10">
             <!-- Logo + brand -->
-            <div class="flex items-center gap-3">
+            <div class="flex items-center gap-3 p-l-25">
                 <img v-if="logo" :src="logo" :alt="brand" class="h-20 w-auto object-contain" />
                 <div class="flex flex-col">
                     <span class="text-md font-bold uppercase leading-tight text-white">{{ brand }}</span>

@@ -1,30 +1,31 @@
 <template>
     <div :class="baseClass">
-        <div class="overflow-hidden rounded border border-gray">
+		<!-- Datatable -->
+        <div class="overflow-hidden shadow-lg">
             <table class="w-full border-collapse bg-white">
                 <thead>
                     <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
                         <th
                             v-for="header in headerGroup.headers"
                             :key="header.id"
-                            class="bg-lightGray px-3 py-2 text-left text-[10px] font-normal text-black select-none"
+                            class="bg-primary py-3 px-4 text-left text-[10px] font-bold text-white select-none border-white border-r-1 first:rounded-tl last:rounded-tr"
                             :class="{ 'cursor-pointer': header.column.getCanSort() }"
                             @click="header.column.toggleSorting()"
                         >
-                            <div class="flex items-center gap-1">
+                            <div class="flex items-center gap-1 text-sm">
                                 <FlexRender :render="header.column.columnDef.header" :props="header.getContext()" />
-                                <Icon v-if="header.column.getIsSorted() === 'asc'" name="boxicons:chevron-up" class="size-3 text-black" />
-                                <Icon v-else-if="header.column.getIsSorted() === 'desc'" name="boxicons:chevron-down" class="size-3 text-black" />
+                                <Icon v-if="header.column.getIsSorted() === 'asc'" name="boxicons:chevron-up" class="size-3 text-white" />
+                                <Icon v-else-if="header.column.getIsSorted() === 'desc'" name="boxicons:chevron-down" class="size-3 text-white" />
                             </div>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="row in table.getRowModel().rows" :key="row.id">
+                    <tr v-for="row in table.getRowModel().rows" class="odd:bg-white even:bg-lightGray" :key="row.id">
                         <td
                             v-for="cell in row.getVisibleCells()"
                             :key="cell.id"
-                            class="px-3 py-2 text-[10px] font-normal text-black"
+                            class="font-normal text-black p-5"
                         >
                             <FlexRender v-if="cell.column.columnDef.cell" :render="cell.column.columnDef.cell" :props="cell.getContext()" />
                             <span v-else>{{ cell.getValue() }}</span>

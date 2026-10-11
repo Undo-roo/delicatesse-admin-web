@@ -6,7 +6,7 @@
                 {{ initials }}
             </div>
         </div>
-        <span v-if="name" class="text-[12px] font-normal leading-[1.25] text-black">{{ name }}</span>
+        <span v-if="name" class="font-normal leading-[1.25] text-black">{{ name }}</span>
     </div>
 </template>
 
