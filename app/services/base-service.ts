@@ -1,11 +1,17 @@
 import type { ApiClient } from './api'
 
+export interface Page<T> {
+    items: T[]
+    total: number
+    page: number
+    size: number
+    pages: number
+}
+
 export interface ListParams {
     page?: number
-    per_page?: number
+    size?: number // fastapi-pagination uses `size`, not `per_page`
     search?: string
-    sort?: string
-    order?: 'asc' | 'desc'
     [key: string]: unknown
 }
 
@@ -41,7 +47,7 @@ export abstract class BaseService<T = unknown> {
     }
 
     list(params?: ListParams) {
-        return this.api.get<T[]>(this.endpoint(), { query: params as Record<string, any> })
+        return this.api.get<Page<T>>(this.endpoint(), { query: params as Record<string, any> })
     }
 
     show(id: string | number) {

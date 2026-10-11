@@ -1,5 +1,5 @@
-import { BaseService } from '../base-service'
-import type { ApiClient } from '../api'
+import { BaseService } from '../../base-service'
+import type { ApiClient } from '../../api'
 
 export interface Product {
     id: string

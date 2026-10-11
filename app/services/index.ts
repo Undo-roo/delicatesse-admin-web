@@ -1,13 +1,15 @@
 import { ApiClient } from './api'
 import type { ApiClientOptions } from './api'
 import { AuthService } from './endpoints/auth.service'
-import { ProductService } from './endpoints/product.service'
+import { ProductService } from './endpoints/assets/product.service'
+import { EmployeeService } from './endpoints/manpower/employeeService'
 
 /** Every endpoint service instance, all built around a single ApiClient. */
 export interface Services {
     api: ApiClient
     auth: AuthService
     products: ProductService
+	employees: EmployeeService
 }
 
 /**
@@ -20,7 +22,12 @@ export function createServices(options: ApiClientOptions = {}): Services {
     return {
         api,
         auth: new AuthService(api),
+
+		// assets
         products: new ProductService(api),
+
+		// manpower
+		employees: new EmployeeService(api),
     }
 }
 
