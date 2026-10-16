@@ -25,13 +25,20 @@
 			:filter="tableFilter" 
 			:page-size="5" 
 			class="mt-12"
+			@read="sheetOpen = true"
 		/>
+		
+		<modals-sheet v-model="sheetOpen" side="bottom" title="EMPLOYEE INFORMATION">
+			<p class="text-black">Sheet content goes here.</p>
+		</modals-sheet>
 	</NuxtLayout>
 </template>
 
 <script lang="ts" setup>
 import BaseAvatar from '~/components/formatters/BaseAvatar.vue';
 import MobileNumber from '~/components/formatters/MobileNumber.vue';
+
+const sheetOpen = ref(false);
 
 
 const tableColumns = [
@@ -42,13 +49,12 @@ const tableColumns = [
             name: row.original.name,
         }),
     },
+    { key: 'email', label: 'Email' },
     {
         key: 'mobileNumber',
         label: 'Mobile Number',
         cell: ({ row }: any) => h(MobileNumber, { number: row.original.mobileNumber }),
     },
-    { key: 'email', label: 'Email' },
-    { key: 'mobileNumber', label: 'Mobile Number' },
     { key: 'role', label: 'Role' },
     // {
     //     key: 'status',

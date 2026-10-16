@@ -8,7 +8,7 @@
                         <th
                             v-for="header in headerGroup.headers"
                             :key="header.id"
-                            class="bg-primary py-3 px-4 text-left text-[10px] font-bold text-white select-none border-white border-r-1 first:rounded-tl last:rounded-tr"
+                            class="bg-primary py-3 px-4 text-left font-bold text-white select-none border-white border-r-1 first:rounded-tl last:rounded-tr"
                             :class="{ 'cursor-pointer': header.column.getCanSort() }"
                             @click="header.column.toggleSorting()"
                         >
@@ -17,6 +17,11 @@
                                 <Icon v-if="header.column.getIsSorted() === 'asc'" name="boxicons:chevron-up" class="size-3 text-white" />
                                 <Icon v-else-if="header.column.getIsSorted() === 'desc'" name="boxicons:chevron-down" class="size-3 text-white" />
                             </div>
+                        </th>
+                        <th
+                            class="bg-primary py-3 px-4 text-left text-sm font-bold text-white select-none border-white border-r-1 first:rounded-tl last:rounded-tr"
+                        >
+							<FlexRender render="Actions" />
                         </th>
                     </tr>
                 </thead>
@@ -29,6 +34,15 @@
                         >
                             <FlexRender v-if="cell.column.columnDef.cell" :render="cell.column.columnDef.cell" :props="cell.getContext()" />
                             <span v-else>{{ cell.getValue() }}</span>
+                        </td>
+					
+                        <td
+                            class="font-normal text-black p-5"
+                        >
+							<div class="flex gap-x-2">
+								<forms-button @click="emits('read')" pre-icon="boxicons:eye" variant="ghost" />
+								<forms-button pre-icon="boxicons:trash-alt" variant="destructive" />
+							</div>
                         </td>
                     </tr>
                     <tr v-if="!table.getRowModel().rows.length">
@@ -99,6 +113,12 @@ import {
     getPaginationRowModel,
 } from '@tanstack/vue-table'
 import type { DataTable } from '~/types/presets/dataTable'
+
+const emits = defineEmits<{
+  (e: 'read'): void
+  (e: 'close'): void
+}>()
+
 
 const props = withDefaults(defineProps<DataTable>(), {
     columns: () => [],

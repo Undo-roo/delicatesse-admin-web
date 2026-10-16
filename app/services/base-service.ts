@@ -30,7 +30,7 @@ export interface ListParams {
  * productService.patch(1,x)  // PATCH  /products/1
  * productService.destroy(1)  // DELETE /products/1
  */
-export abstract class BaseService<T = unknown> {
+export abstract class BaseService<T, TList = Partial<T>, TCreate = Partial<T>, TUpdate = Partial<T>> {
     protected readonly resource: string
 
     constructor(
