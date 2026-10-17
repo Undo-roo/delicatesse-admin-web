@@ -3,10 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
-  modules: [
-    '@unocss/nuxt',
-    '@nuxt/icon'
-  ],
+  modules: ['@unocss/nuxt', '@nuxt/icon', '@nuxt/image'],
   runtimeConfig: {
     // Private (server-only) — never sent to the browser.
     apiSecret: '',

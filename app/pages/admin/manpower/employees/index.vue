@@ -29,7 +29,7 @@
 		/>
 		
 		<modals-sheet v-model="sheetOpen" side="bottom" title="EMPLOYEE INFORMATION">
-			<p class="text-black">Sheet content goes here.</p>
+			<employees-read />
 		</modals-sheet>
 	</NuxtLayout>
 </template>
