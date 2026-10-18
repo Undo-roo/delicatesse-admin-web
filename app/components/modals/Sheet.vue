@@ -35,7 +35,7 @@ function close() {
 }
 
 const panelClasses: Record<NonNullable<Sheet['side']>, string> = {
-    bottom: 'fixed inset-x-0 bottom-0 z-50 flex flex-col min-h-[640px] max-h-[80vh] rounded-tr-lg bg-white p-3',
+    bottom: 'fixed inset-x-0 bottom-0 z-50 flex flex-col min-h-[800px] max-h-[80vh] rounded-tr-lg bg-white p-3',
     left: 'fixed inset-y-0 left-0 z-50 flex flex-col min-w-[320px] max-w-full rounded-rb-lg bg-white p-3',
     right: 'fixed inset-y-0 right-0 z-50 flex flex-col min-w-[320px] max-w-full rounded-lb-lg bg-white p-3',
 };
