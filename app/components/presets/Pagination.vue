@@ -1,27 +1,27 @@
 <template>
-	<div v-if="pageCount > 1" class="mt-3 flex items-center justify-between gap-4">
+	<div v-if="pageCount > 1" class="mt-6 flex items-center justify-between gap-4 px-2">
 		<div class="flex items-center gap-1">
 			<button
 				type="button"
-				class="flex h-6 w-6 cursor-pointer items-center justify-center rounded bg-white disabled:cursor-not-allowed disabled:opacity-40"
+				class="flex px-2 py-1 cursor-pointer items-center justify-center rounded bg-white disabled:cursor-not-allowed disabled:opacity-40"
 				:disabled="!table.getCanPreviousPage()"
 				@click="table.firstPage()"
 			>
-				<Icon name="boxicons:chevrons-left" class="size-4 text-primary" />
+				<Icon name="boxicons:chevrons-left" class="size-6 text-primary" />
 			</button>
 			<button
 				type="button"
-				class="flex h-6 w-6 cursor-pointer items-center justify-center rounded bg-white disabled:cursor-not-allowed disabled:opacity-40"
+				class="flex px-2 py-1 cursor-pointer items-center justify-center rounded bg-white disabled:cursor-not-allowed disabled:opacity-40"
 				:disabled="!table.getCanPreviousPage()"
 				@click="table.previousPage()"
 			>
-				<Icon name="boxicons:chevron-left" class="size-4 text-primary" />
+				<Icon name="boxicons:chevron-left" class="size-6 text-primary" />
 			</button>
 			<button
 				v-for="(n, i) in pageNumbers"
 				:key="i"
 				type="button"
-				class="h-6 min-w-6 cursor-pointer rounded px-1 text-xs font-bold disabled:cursor-not-allowed"
+				class="px-3 py-1 cursor-pointer rounded font-bold disabled:cursor-not-allowed"
 				:class="n === pageIndex + 1 ? 'bg-primary text-white' : 'bg-white text-primary'"
 				:disabled="n === '...'"
 				@click="typeof n === 'number' && table.setPageIndex(n - 1)"
@@ -30,22 +30,22 @@
 			</button>
 			<button
 				type="button"
-				class="flex h-6 w-6 cursor-pointer items-center justify-center rounded bg-white disabled:cursor-not-allowed disabled:opacity-40"
+				class="flex px-2 py-1 cursor-pointer items-center justify-center rounded bg-white disabled:cursor-not-allowed disabled:opacity-40"
 				:disabled="!table.getCanNextPage()"
 				@click="table.nextPage()"
 			>
-				<Icon name="boxicons:chevron-right" class="size-4 text-primary" />
+				<Icon name="boxicons:chevron-right" class="size-6 text-primary" />
 			</button>
 			<button
 				type="button"
-				class="flex h-6 w-6 cursor-pointer items-center justify-center rounded bg-white disabled:cursor-not-allowed disabled:opacity-40"
+				class="flex px-2 py-1 cursor-pointer items-center justify-center rounded bg-white disabled:cursor-not-allowed disabled:opacity-40"
 				:disabled="!table.getCanNextPage()"
 				@click="table.lastPage()"
 			>
-				<Icon name="boxicons:chevrons-right" class="size-4 text-primary" />
+				<Icon name="boxicons:chevrons-right" class="size-6 text-primary" />
 			</button>
 		</div>
-		<span class="text-xs font-bold text-black">Showing {{ startRow }}–{{ endRow }} of {{ totalRows }}</span>
+		<span class="font-bold text-black">Showing {{ startRow }} – {{ endRow }} of {{ totalRows }}</span>
 	</div>
 </template>
 

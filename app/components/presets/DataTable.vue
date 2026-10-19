@@ -52,7 +52,12 @@
             </table>
         </div>
 
-        <div v-if="pageCount > 1" class="mt-3 flex items-center justify-between gap-4">
+		<presets-pagination
+			:table="table"
+			:perPage="5"
+		/>
+
+        <!-- <div v-if="pageCount > 1" class="mt-3 flex items-center justify-between gap-4">
             <div class="flex items-center gap-1">
                 <button
                     type="button"
@@ -99,7 +104,7 @@
                 </button>
             </div>
             <span class="text-xs font-bold text-black">Showing {{ startRow }}–{{ endRow }} of {{ totalRows }}</span>
-        </div>
+        </div> -->
     </div>
 </template>
 
