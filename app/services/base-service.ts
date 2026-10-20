@@ -1,18 +1,21 @@
 import type { ApiClient } from './api'
 
+// app/services/types.ts
 export interface Page<T> {
-    items: T[]
+  data: T[]
+  meta: {
     total: number
     page: number
-    size: number
-    pages: number
+    per_page: number
+    total_pages: number
+  }
 }
 
 export interface ListParams {
-    page?: number
-    size?: number // fastapi-pagination uses `size`, not `per_page`
-    search?: string
-    [key: string]: unknown
+  page?: number
+  per_page?: number
+  search?: string
+  [key: string]: unknown
 }
 
 /**
