@@ -54,10 +54,8 @@ import { computed } from 'vue'
 
 const props = defineProps<{
 	table: any;
-	perPage: number;
+	perPage?: number;
 }>();
-
-// page, perPage, totalPage, 
 
 const pageCount = computed(() => props.table.getPageCount())
 const pageIndex = computed(() => props.table.getState().pagination.pageIndex)

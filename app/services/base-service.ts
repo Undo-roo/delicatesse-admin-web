@@ -50,7 +50,7 @@ export abstract class BaseService<T, TList = Partial<T>, TCreate = Partial<T>, T
     }
 
     list(params?: ListParams) {
-        return this.api.get<Page<T>>(this.endpoint(), { query: params as Record<string, any> })
+        return this.api.get<Page<TList>>(this.endpoint(), { query: params as Record<string, any> })
     }
 
     show(id: string | number) {

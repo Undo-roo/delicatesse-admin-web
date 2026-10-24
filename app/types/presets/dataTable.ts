@@ -18,4 +18,6 @@ export interface DataTable {
     pageSize?: number;
     /** Global search string — filters across every column value. */
     filter?: string;
+    baseClass?: string;
+    isLoading?: boolean;
 }

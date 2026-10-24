@@ -18,12 +18,12 @@
 				<forms-filter />
 			</div>
 		</div>
-		
+
 		<presets-data-table 
 			:columns="tableColumns" 
 			:rows="tableRows" 
 			:filter="tableFilter" 
-			:page-size="5" 
+			:page-size="meta?.per_page" 
 			class="mt-12"
 			@read="sheetOpen = true"
 		/>
@@ -50,8 +50,6 @@ const tableRows = computed(() =>
     dateCreated: e.date_created,
   })),
 )
-
-console.log(tableRows)
 
 const sheetOpen = ref(false);
 
