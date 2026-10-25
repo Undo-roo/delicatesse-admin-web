@@ -4,68 +4,46 @@ import type { FetchOptions } from 'ofetch'
 type FetchClient = ReturnType<typeof $fetch.create>
 
 export interface ApiClientOptions {
-    /** Base URL every request is resolved against (e.g. http://localhost:8000/api). */
     baseURL?: string
-    /** Default headers merged into every request. */
     headers?: Record<string, string>
-    /** Request timeout in milliseconds. Defaults to 30s. */
     timeout?: number
-    /** Returns the auth token attached as `Authorization: Bearer …` on every request. */
     getToken?: () => string | null | undefined
-    /** Called when the API responds with 401 (clear session, redirect to login…). */
-    onUnauthorized?: () => void | Promise<void>
-    /** Called on any request error, after `onUnauthorized`. */
-    onError?: (error: unknown) => void
+    /** Called on any failed request. */
+    onError?: (error: unknown) => void | Promise<void>
 }
 
-/**
- * Configurable HTTP client built on ofetch (`$fetch`).
- * Create one instance per API and share it with your services.
- */
 export class ApiClient {
     private readonly client: FetchClient
-    private readonly baseHeaders: Record<string, string>
-    private readonly getToken?: () => string | null | undefined
-    private readonly onUnauthorized?: () => void | Promise<void>
-    private readonly onError?: (error: unknown) => void
+    private readonly getToken?: ApiClientOptions['getToken']
+    private readonly onError?: ApiClientOptions['onError']
 
     constructor(options: ApiClientOptions = {}) {
-        const {
-            baseURL,
-            headers = {},
-            timeout = 30_000,
-            getToken,
-            onUnauthorized,
-            onError,
-        } = options
+        const { baseURL, headers = {}, timeout = 30_000, getToken, onError } = options
 
-        this.client = $fetch.create({ baseURL, timeout })
-        this.baseHeaders = headers
+        this.client = $fetch.create({ baseURL, timeout, headers })
         this.getToken = getToken
-        this.onUnauthorized = onUnauthorized
         this.onError = onError
     }
 
     private async request<T = unknown>(path: string, options: FetchOptions<'json'> = {}): Promise<T> {
         const token = this.getToken?.()
 
+        const headers = new Headers(options.headers as HeadersInit | undefined)
+        if (token) headers.set('Authorization', `Bearer ${token}`)
+
         try {
-            return await this.client<T>(path, {
-                ...options,
-                headers: {
-                    ...this.baseHeaders,
-                    ...(token ? { Authorization: `Bearer ${token}` } : {}),
-                    ...((options.headers ?? {}) as Record<string, string>),
-                },
-            })
+            return await this.client<T>(path, { ...options, headers })
         }
         catch (error) {
-            const status = (error as { response?: { status?: number } })?.response?.status
-            if (status === 401) {
-                void this.onUnauthorized?.()
+
+            try {
+                await this.onError?.(error)
             }
-            this.onError?.(error)
-            throw error
+            catch (handlerError) {
+                console.error('[ApiClient] error handler failed:', handlerError)
+            }
+
+            throw error // callers still decide what to do next
         }
     }
 

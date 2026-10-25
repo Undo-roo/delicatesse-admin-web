@@ -20,4 +20,5 @@ export interface DataTable {
     filter?: string;
     baseClass?: string;
     isLoading?: boolean;
+    hasActions?: boolean;
 }

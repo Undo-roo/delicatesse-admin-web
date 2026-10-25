@@ -10,3 +10,13 @@ export interface Toast {
     showClose?: boolean;
     duration?: number;
 }
+
+export interface ToastState {
+    isOpen: boolean;
+    title?: string;
+    description?: string;
+    variant?: ToastVariant;
+    position?: ToastPosition;
+    showClose?: boolean;
+    duration?: number;
+}

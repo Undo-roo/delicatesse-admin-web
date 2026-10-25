@@ -19,6 +19,7 @@
                             </div>
                         </th>
                         <th
+							v-if="hasActions"
                             class="bg-primary py-3 px-4 text-left text-sm font-bold text-white select-none border-white border-r-1 first:rounded-tl last:rounded-tr"
                         >
 							<FlexRender render="Actions" />
@@ -26,27 +27,8 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="row in table.getRowModel().rows" class="odd:bg-white even:bg-lightGray" :key="row.id">
-                        <td
-                            v-for="cell in row.getVisibleCells()"
-                            :key="cell.id"
-                            class="font-normal text-black p-5"
-                        >
-                            <FlexRender v-if="cell.column.columnDef.cell" :render="cell.column.columnDef.cell" :props="cell.getContext()" />
-                            <span v-else>{{ cell.getValue() }}</span>
-                        </td>
-					
-                        <td
-                            class="font-normal text-black p-5"
-                        >
-							<div class="flex gap-x-2">
-								<forms-button @click="emits('read')" pre-icon="boxicons:eye" variant="ghost" />
-								<forms-button pre-icon="boxicons:trash-alt" variant="destructive" />
-							</div>
-                        </td>
-                    </tr>
-                    <tr v-if="!table.getRowModel().rows.length">
-                        <td :colspan="columns.length" class="px-3 py-8 text-center text-[10px] text-gray">No results found</td>
+                    <tr>
+                        <td :colspan="columnsCount" class="px-3 py-8 text-center text-gray">No results found</td>
                     </tr>
                 </tbody>
             </table>
@@ -75,11 +57,11 @@ const emits = defineEmits<{
   (e: 'close'): void
 }>()
 
-
 const props = withDefaults(defineProps<DataTable>(), {
     columns: () => [],
     rows: () => [],
     pageSize: 10,
+	hasActions: true,
 })
 
 const columnDefs = props.columns.map((c) => ({
@@ -87,6 +69,8 @@ const columnDefs = props.columns.map((c) => ({
     header: c.label ?? c.key,
     ...(c.cell ? { cell: c.cell } : {}),
 }))
+
+const columnsCount = computed(() => props.columns.length + +props.hasActions )
 
 const filteredRows = computed(() => {
     const q = (props.filter ?? '').trim().toLowerCase()

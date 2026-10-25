@@ -1,3 +1,4 @@
+import type { FetchError } from 'ofetch'
 import { createServices } from '~/services'
 
 export default defineNuxtPlugin((nuxtApp) => {
@@ -7,8 +8,19 @@ export default defineNuxtPlugin((nuxtApp) => {
     const services = createServices({
         baseURL: config.public.apiBase,
         getToken: () => token.value,
-        onUnauthorized: () => {
-            token.value = null
+
+        onError: async (e) => {
+            const err = e as FetchError
+
+            // expired session: we had a token and the server rejected it
+            // (without the token check, a wrong password on the login form would also land here)
+            if (err.status === 401 && token.value) {
+                token.value = null
+                await nuxtApp.runWithContext(() => navigateTo('/admin/login'))
+                return
+            }
+
+            await nuxtApp.callHook('api:error', err)
         },
     })
 

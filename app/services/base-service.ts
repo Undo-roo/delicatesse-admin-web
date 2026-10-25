@@ -57,15 +57,15 @@ export abstract class BaseService<T, TList = Partial<T>, TCreate = Partial<T>, T
         return this.api.get<T>(this.endpoint(id))
     }
 
-    store(payload: Partial<T>) {
+    store(payload: Partial<TCreate>) {
         return this.api.post<T>(this.endpoint(), payload)
     }
 
-    update(id: string | number, payload: Partial<T>) {
+    update(id: string | number, payload: Partial<TUpdate>) {
         return this.api.put<T>(this.endpoint(id), payload)
     }
 
-    patch(id: string | number, payload: Partial<T>) {
+    patch(id: string | number, payload: Partial<any>) {
         return this.api.patch<T>(this.endpoint(id), payload)
     }
 

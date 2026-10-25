@@ -4,6 +4,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
   modules: ['@unocss/nuxt', '@nuxt/icon', '@nuxt/image'],
+  ssr: false, // admin-only app: everything runs in the browser
   runtimeConfig: {
     // Private (server-only) — never sent to the browser.
     apiSecret: '',
