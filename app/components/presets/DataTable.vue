@@ -27,7 +27,26 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr v-for="row in table.getRowModel().rows" class="odd:bg-white even:bg-lightGray" :key="row.id">
+                        <td
+                            v-for="cell in row.getVisibleCells()"
+                            :key="cell.id"
+                            class="font-normal text-black p-5"
+                        >
+                            <FlexRender v-if="cell.column.columnDef.cell" :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+                            <span v-else>{{ cell.getValue() }}</span>
+                        </td>
+					
+                        <td
+                            class="font-normal text-black p-5"
+                        >
+							<div class="flex gap-x-2">
+								<forms-button @click="emits('read', row.original)" pre-icon="boxicons:eye" variant="ghost" />
+								<forms-button pre-icon="boxicons:trash-alt" variant="destructive" />
+							</div>
+                        </td>
+                    </tr>
+                    <tr v-if="!table.getRowModel().rows.length">
                         <td :colspan="columnsCount" class="px-3 py-8 text-center text-gray">No results found</td>
                     </tr>
                 </tbody>
@@ -53,7 +72,7 @@ import {
 import type { DataTable } from '~/types/presets/dataTable'
 
 const emits = defineEmits<{
-  (e: 'read'): void
+  (e: 'read', id: any): void
   (e: 'close'): void
 }>()
 

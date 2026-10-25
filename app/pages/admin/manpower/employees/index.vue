@@ -19,17 +19,23 @@
 			</div>
 		</div>
 
+		
 		<presets-data-table 
 			:columns="tableColumns" 
-			:rows="tableRows" 
+			:rows="rows" 
 			:filter="tableFilter" 
 			:page-size="meta?.per_page" 
 			class="mt-12"
-			@read="sheetOpen = true"
+			@read="row => {
+				console.log(row);
+				activeEmployee = row.id;
+				sheetOpen = true
+			}"
 		/>
+
 		
 		<modals-sheet v-model="sheetOpen" side="bottom" title="EMPLOYEE INFORMATION">
-			<employees-read />
+			<employees-read :id="activeEmployee" />
 		</modals-sheet>
 	</NuxtLayout>
 </template>
@@ -38,18 +44,9 @@
 import BaseAvatar from '~/components/formatters/BaseAvatar.vue';
 import MobileNumber from '~/components/formatters/MobileNumber.vue';
 
-const { list } = useEmployee();
-const { rows, meta, status, search, page } = list
+const { rows, meta, status, search, page, refresh } = useEmployees();
 
-const tableRows = computed(() =>
-  rows.value.map(e => ({
-    name: e.name,
-    email: e.email,
-    mobileNumber: e.mobile_number,   // may be null
-    role: e.role,
-    dateCreated: e.date_created,
-  })),
-)
+const activeEmployee = ref();
 
 const sheetOpen = ref(false);
 
@@ -68,17 +65,10 @@ const tableColumns = [
         cell: ({ row }: any) => h(MobileNumber, { number: row.original.mobileNumber }),
     },
     { key: 'role', label: 'Role' },
-    // {
-    //     key: 'status',
-    //     label: 'Status',
-    //     cell: ({ row }: any) => h(StatusPill, {
-    //         text: row.original.status,
-    //         variant: statusVariantMap[row.original.status] ?? 'default',
-    //         showIcon: false,
-    //     }),
-    // },
     { key: 'dateCreated', label: 'Date Created' },
 ];
+
 const tableFilter = ref('');
 
+onMounted(refresh);
 </script>

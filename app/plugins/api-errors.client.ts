@@ -5,6 +5,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     nuxtApp.hook('api:error', (e) => {
         if (!e.status) {
             error('Cannot reach the server. Check your connection.', 'Network error')
+            // Redirect to server not reachable page
             return
         }
 

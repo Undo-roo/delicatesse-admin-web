@@ -14,7 +14,9 @@ export function useApiList<T>(
   const result = useAsyncData(
     key,
     () => fetcher({ page: page.value, per_page: perPage.value, search: search.value || undefined }),
-    { watch: [page, perPage, search] },
+    { 
+      watch: [page, perPage, search],
+    },    
   )
 
   watch([search, perPage], () => { page.value = 1 })

@@ -2,7 +2,9 @@
 	<presets-read-sidebar>
 	</presets-read-sidebar>
 
-	<div class="w-full px-6 py-2">
+	<!-- skeletal loading -->
+	 <!-- Error state -->
+	<div v-if="employee && !isFetching" class="w-full px-6 py-2">
 		<presets-read-card>
 			<presets-read-card-content 
 				class="col-span-6"
@@ -47,29 +49,11 @@
 interface EmployeeReadSheet {
 	id: string|number;
 }
+const props = defineProps<EmployeeReadSheet>();
 
-const employee = {
-    id: 1,
-    first_name: "Yeji",
-    last_name: "Hwang",
-    mobile_number: "09662484132",
-    role: "Super Admin",
-    date_hired: "June 25, 2026",
-    date_created: "June 25, 2026",
-    email: "hwng.yeji@gmail.com",
-};
+const employeeId = computed(() => props.id);
+	
+const { data: employee, status, refresh } = useEmployee(employeeId);
 
-const isFetching = ref(false);
-
-onActivated(() => {
-	try {
-		isFetching.value = true;
-	}
-	catch(err) {
-
-	}
-	finally {
-		setTimeout(() => isFetching.value = false, 2_500)
-	}
-})
+const isFetching = computed(() => status.value === 'pending' || status.value === 'idle' );
 </script>
