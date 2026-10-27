@@ -41,8 +41,9 @@
                             class="font-normal text-black p-5"
                         >
 							<div class="flex gap-x-2">
-								<forms-button @click="emits('read', row.original)" pre-icon="boxicons:eye" variant="ghost" />
-								<forms-button pre-icon="boxicons:trash-alt" variant="destructive" />
+								<forms-button @click="emits('read', row.original)" pre-icon="boxicons:eye" variant="outline" />
+								<forms-button @click="emits('delete', row.original)" pre-icon="boxicons:trash-alt" variant="destructive" />
+								<forms-button @click="emits('restore', row.original)" pre-icon="boxicons:recycle" pre-icon-class="text-green-600" variant="outline" />
 							</div>
                         </td>
                     </tr>
@@ -72,8 +73,9 @@ import {
 import type { DataTable } from '~/types/presets/dataTable'
 
 const emits = defineEmits<{
-  (e: 'read', id: any): void
-  (e: 'close'): void
+  (e: 'read', row: any): void
+  (e: 'delete', row: any): void
+  (e: 'restore', row: any): void
 }>()
 
 const props = withDefaults(defineProps<DataTable>(), {

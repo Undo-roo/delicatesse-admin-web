@@ -8,4 +8,8 @@ export class EmployeeService extends BaseService<Employee, EmployeeList>
         // Pass the required api instance and the base backend path 'employees'
         super(api, 'manpower/employees')
     }
+
+    restore(id: string | number) {
+        return this.api.patch<Employee>(this.endpoint(`${id}/restore`))
+    }
 }

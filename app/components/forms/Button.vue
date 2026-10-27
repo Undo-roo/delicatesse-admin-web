@@ -3,9 +3,9 @@
         :class="[variantClass, baseClass, baseStyle]"
         :disabled="disabled"
     >
-        <Icon v-if="preIcon" class="size-4" :name="preIcon" />
+        <Icon v-if="preIcon" :class="['size-4', preIconClass]" :name="preIcon" />
         <span v-if="text">{{ text }}</span>
-        <Icon v-if="postIcon" class="size-4" :name="postIcon" />
+        <Icon v-if="postIcon" :class="['size-4', postIconClass]" :name="postIcon" />
     </button>
 </template>
 

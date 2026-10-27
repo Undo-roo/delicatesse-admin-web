@@ -5,6 +5,8 @@ export interface Button {
     error?: string;
     text?: string;
     baseClass?: string;
+    preIconClass?: string;
+    postIconClass?: string;
     disabled?: boolean;
     variant?: 'default' | 'outline' | 'ghost' | 'secondary' | 'destructive' | 'link'
 }

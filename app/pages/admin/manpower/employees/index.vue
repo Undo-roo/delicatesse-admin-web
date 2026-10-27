@@ -27,28 +27,74 @@
 			:page-size="meta?.per_page" 
 			class="mt-12"
 			@read="row => {
-				console.log(row);
-				activeEmployee = row.id;
+				activeEmployee = row;
 				sheetOpen = true
+			}"
+			@delete="row => {
+				activeEmployee = row;
+				actionModal.title = `Archive ${activeEmployee?.name}?`;
+				actionModal.message = 'Temporarily employee\' data is unnaccessible and prohibits them to access the system until restore back';
+				actionModal.variant = 'destructive';
+				actionDialogOpen = true;
+			}"
+			@restore="row => {
+				activeEmployee = row;
+				actionModal.title = `Restore ${activeEmployee?.name}?`;
+				actionModal.message = 'Employee\'s data will now be accessible and has the access to the system';
+				actionModal.variant = 'info';
+				actionDialogOpen = true;
 			}"
 		/>
 
 		
 		<modals-sheet v-model="sheetOpen" side="bottom" title="EMPLOYEE INFORMATION">
-			<employees-read :id="activeEmployee" />
+			<employees-read :id="activeEmployee?.id" />
 		</modals-sheet>
+
+
+		<modals-confirmation 
+			v-model="actionDialogOpen"
+			:variant="actionModal.variant"
+			:title="actionModal.title"
+			:message="actionModal.message"
+			@confirm="handleActions"
+			:loading="loading"
+		/>
 	</NuxtLayout>
 </template>
 
 <script lang="ts" setup>
 import BaseAvatar from '~/components/formatters/BaseAvatar.vue';
 import MobileNumber from '~/components/formatters/MobileNumber.vue';
+type Variant = 'destructive' | 'success' | 'warning' | 'info'
 
 const { rows, meta, status, search, page, refresh } = useEmployees();
+const { loading, archive, restore } = useEmployeeActions();
 
 const activeEmployee = ref();
 
 const sheetOpen = ref(false);
+const actionDialogOpen = ref(false);
+
+const actionModal = ref<{title: string, message: string, variant: Variant }>({
+	title: "",
+	message: "",
+	variant: "destructive",
+});
+
+const handleActions = async () => {
+	const employee = activeEmployee.value;
+
+	if(!employee || loading.value) {
+		actionDialogOpen.value = false;
+		return;
+	}
+
+	if(actionModal.value.variant === 'destructive') await archive(employee.id);
+	else await restore(employee.id);
+
+	actionDialogOpen.value = false;
+}
 
 const tableColumns = [
     {
