@@ -12,13 +12,28 @@ export interface DataTableColumn {
     cell?: (ctx: DataTableCellContext) => unknown;
 }
 
+export interface PaginationMeta {
+    total: number;
+    page: number;
+    per_page: number;
+    total_pages: number;
+}
+
 export interface DataTable {
     columns?: DataTableColumn[];
     rows?: Record<string, any>[];
-    pageSize?: number;
-    /** Global search string — filters across every column value. */
+    /** Server-side (backend) pagination: `rows` are already the current page. */
+    serverSide?: boolean;
+    meta?: PaginationMeta;
+    /** Current page (v-model:page) — used only when `serverSide` is true. */
+    page?: number;
+    /** Client-side global search — used only when `serverSide` is false. */
     filter?: string;
+    /** Client-side page size — used only when `serverSide` is false. */
+    pageSize?: number;
     baseClass?: string;
     isLoading?: boolean;
     hasActions?: boolean;
+    /** Show the restore action (only relevant on "archived" tab). */
+    showRestore?: boolean;
 }

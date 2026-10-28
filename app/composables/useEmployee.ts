@@ -2,7 +2,7 @@ import { type Employee, type EmployeeList } from "~/types/manpower/employees"
 
 export function useEmployees() {
   const { employees } = useApi();
-  return useApiList<EmployeeList>('employees', p => employees.list(p));
+  return useApiList<EmployeeList>('employees', p => employees.list(p), { tab: 'active' });
 }
 
 export function useEmployee(id: MaybeRefOrGetter<string | number | undefined>) {

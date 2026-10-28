@@ -1,5 +1,6 @@
 <template>
     <button
+        type="button"
         :class="[variantClass, baseClass, baseStyle]"
         :disabled="disabled"
     >

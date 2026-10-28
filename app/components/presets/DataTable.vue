@@ -1,14 +1,14 @@
 <template>
     <div :class="baseClass">
 		<!-- Datatable -->
-        <div class="overflow-hidden shadow-lg">
+        <div class="overflow-hidden shadow-lg" :class="{ 'opacity-50 pointer-events-none': isLoading }">
             <table class="w-full border-collapse bg-white">
                 <thead>
                     <tr v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
                         <th
                             v-for="header in headerGroup.headers"
                             :key="header.id"
-                            class="bg-primary py-3 px-4 text-left font-bold text-white select-none border-white border-r-1 first:rounded-tl last:rounded-tr"
+                            class="border-r-1 border-white bg-primary px-4 py-3 text-left text-sm font-bold text-white select-none first:rounded-tl last:rounded-tr"
                             :class="{ 'cursor-pointer': header.column.getCanSort() }"
                             @click="header.column.toggleSorting()"
                         >
@@ -20,7 +20,7 @@
                         </th>
                         <th
 							v-if="hasActions"
-                            class="bg-primary py-3 px-4 text-left text-sm font-bold text-white select-none border-white border-r-1 first:rounded-tl last:rounded-tr"
+                            class="border-r-1 border-white bg-primary px-4 py-3 text-left text-sm font-bold text-white select-none first:rounded-tl last:rounded-tr"
                         >
 							<FlexRender render="Actions" />
                         </th>
@@ -31,19 +31,17 @@
                         <td
                             v-for="cell in row.getVisibleCells()"
                             :key="cell.id"
-                            class="font-normal text-black p-5"
+                            class="p-5 font-normal text-black"
                         >
                             <FlexRender v-if="cell.column.columnDef.cell" :render="cell.column.columnDef.cell" :props="cell.getContext()" />
                             <span v-else>{{ cell.getValue() }}</span>
                         </td>
 					
-                        <td
-                            class="font-normal text-black p-5"
-                        >
+                        <td v-if="hasActions" class="p-5 font-normal text-black">
 							<div class="flex gap-x-2">
-								<forms-button @click="emits('read', row.original)" pre-icon="boxicons:eye" variant="outline" />
-								<forms-button @click="emits('delete', row.original)" pre-icon="boxicons:trash-alt" variant="destructive" />
-								<forms-button @click="emits('restore', row.original)" pre-icon="boxicons:recycle" pre-icon-class="text-green-600" variant="outline" />
+								<forms-button v-if="!showRestore" @click="emits('read', row.original)" pre-icon="boxicons:eye" variant="outline" />
+								<forms-button v-if="!showRestore" @click="emits('delete', row.original)" pre-icon="boxicons:trash-alt" variant="destructive" />
+								<forms-button v-if="showRestore" @click="emits('restore', row.original)" pre-icon="boxicons:recycle" pre-icon-class="text-green-600" variant="outline" />
 							</div>
                         </td>
                     </tr>
@@ -55,8 +53,11 @@
         </div>
 
 		<presets-pagination
-			:table="table"
-			:perPage="pageSize"
+			:page="paginationPage"
+			:per-page="paginationPerPage"
+			:total="paginationTotal"
+			:total-pages="paginationTotalPages"
+			@update:page="onPageChange"
 		/>
     </div>
 </template>
@@ -73,16 +74,19 @@ import {
 import type { DataTable } from '~/types/presets/dataTable'
 
 const emits = defineEmits<{
-  (e: 'read', row: any): void
-  (e: 'delete', row: any): void
-  (e: 'restore', row: any): void
+    'update:page': [page: number];
+    'read': [row: any];
+    'delete': [row: any];
+    'restore': [row: any];
 }>()
 
 const props = withDefaults(defineProps<DataTable>(), {
     columns: () => [],
     rows: () => [],
     pageSize: 10,
-	hasActions: true,
+    serverSide: false,
+    hasActions: true,
+    showRestore: false,
 })
 
 const columnDefs = props.columns.map((c) => ({
@@ -91,9 +95,11 @@ const columnDefs = props.columns.map((c) => ({
     ...(c.cell ? { cell: c.cell } : {}),
 }))
 
-const columnsCount = computed(() => props.columns.length + +props.hasActions )
+const columnsCount = computed(() => props.columns.length + +props.hasActions)
 
+// Client-side filtering — only used when serverSide is false.
 const filteredRows = computed(() => {
+    if (props.serverSide) return props.rows
     const q = (props.filter ?? '').trim().toLowerCase()
     if (!q) return props.rows
     return props.rows.filter((row) =>
@@ -107,6 +113,25 @@ const table = useVueTable({
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    manualPagination: props.serverSide,
     initialState: { pagination: { pageSize: props.pageSize } },
 })
+
+const paginationPage = computed(() =>
+    props.serverSide ? (props.page ?? props.meta?.page ?? 1) : table.getState().pagination.pageIndex + 1,
+)
+const paginationPerPage = computed(() =>
+    props.serverSide ? (props.meta?.per_page ?? props.pageSize) : table.getState().pagination.pageSize,
+)
+const paginationTotal = computed(() =>
+    props.serverSide ? (props.meta?.total ?? 0) : filteredRows.value.length,
+)
+const paginationTotalPages = computed(() =>
+    props.serverSide ? (props.meta?.total_pages ?? 0) : table.getPageCount(),
+)
+
+function onPageChange(p: number) {
+    if (props.serverSide) emits('update:page', p)
+    else table.setPageIndex(p - 1)
+}
 </script>

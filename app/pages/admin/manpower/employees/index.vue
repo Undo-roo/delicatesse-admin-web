@@ -9,13 +9,15 @@
 					<Icon name="boxicons:chevron-right-filled" class="size-12" />
 					<p class="text-primary">Employees</p>
 				</div>
-				<div>
-					<!-- Tab button here -->
-				</div>
 			</div>
 
 			<div class="flex-1">
-				<forms-filter />
+				<forms-filter
+					v-model:tab="tab"
+					:tabs="employeeTabs"
+					@search="onSearch"
+					@clear="onClear"
+				/>
 			</div>
 		</div>
 
@@ -23,8 +25,11 @@
 		<presets-data-table 
 			:columns="tableColumns" 
 			:rows="rows" 
-			:filter="tableFilter" 
-			:page-size="meta?.per_page" 
+			:meta="meta"
+			v-model:page="page"
+			server-side
+			:is-loading="status === 'pending'"
+			:show-restore="tab === 'archived'"
 			class="mt-12"
 			@read="row => {
 				activeEmployee = row;
@@ -68,8 +73,21 @@ import BaseAvatar from '~/components/formatters/BaseAvatar.vue';
 import MobileNumber from '~/components/formatters/MobileNumber.vue';
 type Variant = 'destructive' | 'success' | 'warning' | 'info'
 
-const { rows, meta, status, search, page, refresh } = useEmployees();
+const { rows, meta, status, search, page, tab, refresh } = useEmployees();
 const { loading, archive, restore } = useEmployeeActions();
+
+const employeeTabs = [
+	{ label: 'Active', value: 'active' },
+	{ label: 'Archived', value: 'archived' },
+];
+
+function onSearch(q: string) {
+	search.value = q;
+}
+
+function onClear() {
+	search.value = '';
+}
 
 const activeEmployee = ref();
 
@@ -113,8 +131,6 @@ const tableColumns = [
     { key: 'role', label: 'Role' },
     { key: 'dateCreated', label: 'Date Created' },
 ];
-
-const tableFilter = ref('');
 
 onMounted(refresh);
 </script>
