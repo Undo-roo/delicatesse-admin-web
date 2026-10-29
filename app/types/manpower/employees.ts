@@ -18,3 +18,12 @@ export interface EmployeeList {
     role?: string
     date_created: string
 }
+
+export interface EmployeePayload {
+    first_name: string;
+    last_name: string;
+    email: string;
+    date_hired?: string;
+    mobile_number?: string;
+    role_id: number;
+}

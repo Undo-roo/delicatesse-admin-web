@@ -82,6 +82,7 @@ export default defineConfig({
           display: flex;
           align-items: center;
           min-width: 220px;
+          border: 2px solid ${general.lightGray} !important;
         }
 
         .base-text-input:has(input:disabled),

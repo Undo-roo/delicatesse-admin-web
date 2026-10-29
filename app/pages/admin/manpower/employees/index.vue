@@ -1,26 +1,22 @@
 <template>
-	<NuxtLayout name="admin">
+	<NuxtLayout name="admin" :breadcrumbs="['Manpower', 'Employees']">
 		
-		<!-- TAB -->
-		<div class="flex w-full gap-x-10">
-			<div class="">
-				<div class="flex gap-x-2 text-3xl font-bold items-center text-gray">
-					<p>Manpower</p>
-					<Icon name="boxicons:chevron-right-filled" class="size-12" />
-					<p class="text-primary">Employees</p>
-				</div>
-			</div>
-
-			<div class="flex-1">
-				<forms-filter
-					v-model:tab="tab"
-					:tabs="employeeTabs"
-					@search="onSearch"
-					@clear="onClear"
-				/>
-			</div>
-		</div>
-
+		<template #filter>
+			<forms-filter
+				v-model:tab="tab"
+				:tabs="employeeTabs"
+				@search="onSearch"
+				@clear="onClear"
+			>
+				<template #actions>
+					<forms-button 
+						text="Add Employee" 
+						pre-icon="boxicons:plus-circle" 
+						@click="openCreate" 
+					/>
+				</template>
+			</forms-filter>
+		</template>
 		
 		<presets-data-table 
 			:columns="tableColumns" 
@@ -30,7 +26,7 @@
 			server-side
 			:is-loading="status === 'pending'"
 			:show-restore="tab === 'archived'"
-			class="mt-12"
+			class="mt-4"
 			@read="row => {
 				activeEmployee = row;
 				sheetOpen = true
@@ -50,12 +46,10 @@
 				actionDialogOpen = true;
 			}"
 		/>
-
 		
 		<modals-sheet v-model="sheetOpen" side="bottom" title="EMPLOYEE INFORMATION">
-			<employees-read :id="activeEmployee?.id" />
+			<employees-read :id="activeEmployee?.id" @edit="openEdit" />
 		</modals-sheet>
-
 
 		<modals-confirmation 
 			v-model="actionDialogOpen"
@@ -65,12 +59,25 @@
 			@confirm="handleActions"
 			:loading="loading"
 		/>
+
+		<modals-sheet
+			v-model="createSheetOpen"
+			side="bottom" 
+			:title="'Create Employee'"
+		>
+			<employees-upsert-sheet
+				:employee="editingEmployee"
+				@saved="refresh"
+				@cancel="createSheetOpen = false"
+			/>
+		</modals-sheet>
 	</NuxtLayout>
 </template>
 
 <script lang="ts" setup>
 import BaseAvatar from '~/components/formatters/BaseAvatar.vue';
 import MobileNumber from '~/components/formatters/MobileNumber.vue';
+import type { Employee } from '~/types/manpower/employees';
 type Variant = 'destructive' | 'success' | 'warning' | 'info'
 
 const { rows, meta, status, search, page, tab, refresh } = useEmployees();
@@ -93,6 +100,19 @@ const activeEmployee = ref();
 
 const sheetOpen = ref(false);
 const actionDialogOpen = ref(false);
+const createSheetOpen = ref(false);
+const editingEmployee = ref<Employee | null>(null);
+
+function openCreate() {
+	editingEmployee.value = null;
+	createSheetOpen.value = true;
+}
+
+function openEdit(employee: Employee) {
+	editingEmployee.value = employee;
+	sheetOpen.value = false;
+	createSheetOpen.value = true;
+}
 
 const actionModal = ref<{title: string, message: string, variant: Variant }>({
 	title: "",

@@ -2,13 +2,15 @@
     <div :class="baseClass">
         <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:gap-6">
             <!-- Tab filter -->
-            <div v-if="tabs?.length" class="flex flex-wrap items-center gap-2">
+            <div v-if="tabs?.length" class="flex flex-wrap items-center border-2 border-primary rounded">
                 <button
-                    v-for="t in tabs"
+                    v-for="t, ind in tabs"
                     :key="t.value"
                     type="button"
-                    class="cursor-pointer rounded-full px-5 py-2 text-sm font-bold transition-colors"
-                    :class="tab === t.value ? 'bg-primary text-white' : 'bg-lightGray text-darkGray hover:bg-gray'"
+                    class="px-5 py-2 text-sm font-bold transition-colors"
+                    :class="[
+						tab === t.value ? 'bg-primary text-white' : 'bg-lightGray text-primary hover:bg-gray cursor-pointer',
+					]"
                     @click="emit('update:tab', t.value)"
                 >
                     {{ t.label }}
@@ -36,6 +38,16 @@
                 <forms-button class="min-h-[60px] w-[125px] text-sm" variant="ghost" text="Clear" :disabled="!query" @click="onClear" />
             </div>
         </div>
+
+		<!-- Search + buttons -->
+		<div class="flex flex-1 mt-2 justify-between">
+			<div class="flex">
+				<!-- Dnyamic filter here -->
+				<forms-button class="w-[266px]" variant="outline" pre-icon="boxicons:plus-filled" text="Add Filter" @click="onClear" />
+			</div>
+
+			<slot name="actions" />
+		</div>
     </div>
 </template>
 
