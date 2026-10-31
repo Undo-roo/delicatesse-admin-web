@@ -9,7 +9,7 @@ export default defineNuxtPlugin((nuxtApp) => {
             return
         }
 
-        if (e.status === 401 || e.status === 422) return
+        if (e.status === 401 || e.status === 400 || e.status === 422) return
 
         if (e.status === 403) {
             error('You don’t have access to that.', 'Access denied')

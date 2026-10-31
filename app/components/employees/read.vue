@@ -1,10 +1,26 @@
 <template>
 	<presets-read-sidebar>
+		<template #footer>
+			<forms-button 
+				text="Update Information" 
+				variant="outline" 
+				@click="isUpdating = true" 
+				class="w-full" 
+				pre-icon="boxicons:edit"
+				:disabled="isUpdating"
+			/>
+			<forms-button 
+				text="Delete Employee" 
+				variant="destructive" 
+				class="w-full !border-red-500" 
+				pre-icon="boxicons:trash"
+				@click="emit('delete')"
+			/>
+		</template>
 	</presets-read-sidebar>
 
-	<!-- skeletal loading -->
-	 <!-- Error state -->
-	<div v-if="employee && !isFetching" class="w-full px-6 py-2">
+	<!-- read mode -->
+	<div v-if="employee && !isFetching && !isUpdating" class="w-full px-6 py-2">
 		<presets-read-card>
 			<presets-read-card-content 
 				class="col-span-6"
@@ -42,26 +58,37 @@
 				:content="employee.email" 
 			/>
 		</presets-read-card>
-
-		<div class="mt-6 flex justify-end px-6 pb-4">
-			<forms-button text="Edit" pre-icon="boxicons:edit" @click="emit('edit', employee)" />
-		</div>
 	</div>
+
+	<!-- update mode -->
+	<employees-form
+		v-else-if="isUpdating && employee"
+		:employee="employee"
+		:open="isUpdating"
+		@saved="onSaved"
+		@cancel="isUpdating = false"
+	/>
 </template>
 
 <script lang="ts" setup>
-import type { Employee } from '~/types/manpower/employees';
-
 interface EmployeeReadSheet {
 	id: string|number;
 }
 const props = defineProps<EmployeeReadSheet>();
 
-const emit = defineEmits<{ edit: [employee: Employee] }>();
+const emit = defineEmits<{ delete: [] }>();
 
 const employeeId = computed(() => props.id);
-	
+
+const isUpdating = ref(false);
+
 const { data: employee, status, refresh } = useEmployee(employeeId);
 
-const isFetching = computed(() => status.value === 'pending' || status.value === 'idle' );
+const isFetching = computed(() => status.value === 'pending' || status.value === 'idle');
+
+async function onSaved() {
+	await refresh();
+	await refreshNuxtData('employees');
+	isUpdating.value = false;
+}
 </script>

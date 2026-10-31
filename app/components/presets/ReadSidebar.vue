@@ -8,6 +8,10 @@
 				<p >{{ test.label }}</p>
 			</div>
 		</div>
+
+		<div v-if="$slots.footer" class="w-full mt-auto space-y-2">
+			<slot name="footer" />
+		</div>
     </div>
 </template>
 

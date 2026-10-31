@@ -33,10 +33,7 @@
 			}"
 			@delete="row => {
 				activeEmployee = row;
-				actionModal.title = `Archive ${activeEmployee?.name}?`;
-				actionModal.message = 'Temporarily employee\' data is unnaccessible and prohibits them to access the system until restore back';
-				actionModal.variant = 'destructive';
-				actionDialogOpen = true;
+				promptArchive();
 			}"
 			@restore="row => {
 				activeEmployee = row;
@@ -48,7 +45,7 @@
 		/>
 		
 		<modals-sheet v-model="sheetOpen" side="bottom" title="EMPLOYEE INFORMATION">
-			<employees-read :id="activeEmployee?.id" @edit="openEdit" />
+			<employees-read :id="activeEmployee?.id" @delete="promptArchive" />
 		</modals-sheet>
 
 		<modals-confirmation 
@@ -65,9 +62,9 @@
 			side="bottom" 
 			:title="'Create Employee'"
 		>
-			<employees-upsert-sheet
-				:employee="editingEmployee"
-				@saved="refresh"
+			<employees-create-sheet
+				:open="createSheetOpen"
+				@saved="onSaved"
 				@cancel="createSheetOpen = false"
 			/>
 		</modals-sheet>
@@ -77,7 +74,6 @@
 <script lang="ts" setup>
 import BaseAvatar from '~/components/formatters/BaseAvatar.vue';
 import MobileNumber from '~/components/formatters/MobileNumber.vue';
-import type { Employee } from '~/types/manpower/employees';
 type Variant = 'destructive' | 'success' | 'warning' | 'info'
 
 const { rows, meta, status, search, page, tab, refresh } = useEmployees();
@@ -101,17 +97,14 @@ const activeEmployee = ref();
 const sheetOpen = ref(false);
 const actionDialogOpen = ref(false);
 const createSheetOpen = ref(false);
-const editingEmployee = ref<Employee | null>(null);
 
 function openCreate() {
-	editingEmployee.value = null;
 	createSheetOpen.value = true;
 }
 
-function openEdit(employee: Employee) {
-	editingEmployee.value = employee;
-	sheetOpen.value = false;
-	createSheetOpen.value = true;
+function onSaved() {
+	createSheetOpen.value = false;
+	refresh();
 }
 
 const actionModal = ref<{title: string, message: string, variant: Variant }>({
@@ -119,6 +112,13 @@ const actionModal = ref<{title: string, message: string, variant: Variant }>({
 	message: "",
 	variant: "destructive",
 });
+
+function promptArchive() {
+	actionModal.value.title = `Archive ${activeEmployee.value?.name}?`;
+	actionModal.value.message = "Temporarily employee' data is unnaccessible and prohibits them to access the system until restore back";
+	actionModal.value.variant = 'destructive';
+	actionDialogOpen.value = true;
+}
 
 const handleActions = async () => {
 	const employee = activeEmployee.value;
@@ -132,6 +132,7 @@ const handleActions = async () => {
 	else await restore(employee.id);
 
 	actionDialogOpen.value = false;
+	sheetOpen.value = false;
 }
 
 const tableColumns = [
