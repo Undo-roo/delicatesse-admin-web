@@ -1,5 +1,10 @@
 <template>
-	<presets-read-sidebar>
+	<presets-read-sidebar
+		:src="employee?.avatar"
+		:name="employeeName"
+		:editable="isUpdating"
+		@change="handleAvatarChange"
+	>
 		<template #footer>
 			<forms-button 
 				text="Update Information" 
@@ -83,12 +88,30 @@ const employeeId = computed(() => props.id);
 const isUpdating = ref(false);
 
 const { data: employee, status, refresh } = useEmployee(employeeId);
+const { employees } = useApi();
+const { success } = useToast();
 
 const isFetching = computed(() => status.value === 'pending' || status.value === 'idle');
+
+const employeeName = computed(() => {
+	if (!employee.value) return '';
+	return `${employee.value.first_name} ${employee.value.last_name}`.trim();
+});
 
 async function onSaved() {
 	await refresh();
 	await refreshNuxtData('employees');
 	isUpdating.value = false;
+}
+
+async function handleAvatarChange(file: File) {
+	if (!employee.value) return;
+	try {
+		await employees.uploadAvatar(employee.value.id, file);
+		success('Avatar updated successfully');
+		await refresh();
+	} catch {
+		// global api:error plugin surfaces the failure
+	}
 }
 </script>

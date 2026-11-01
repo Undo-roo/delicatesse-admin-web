@@ -9,4 +9,5 @@ export interface TextInput {
     type?: string;
     preIconClass?: string;
     postIconClass?: string;
+    preLabel?: string;
 }

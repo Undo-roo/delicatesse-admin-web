@@ -2,6 +2,7 @@
     <div :class="baseClass">
         <label v-if="label" class="font-bold" :for="id">{{ label }}</label>
         <div :class="['base-text-input mt-1 space-x-2', errorClass]">
+            <span v-if="preLabel" class="flex-shrink-0 font-bold text-darkGray">{{ preLabel }}</span>
             <Icon v-if="preIcon" :name="preIcon" class="size-4 flex-shrink-0" />
             <input
                 :id="id"
@@ -11,6 +12,7 @@
                 :value="text"
                 :placeholder="placeholder"
                 :disabled="disabled"
+                :maxlength="max || undefined"
                 @keydown="onKeydown"
                 @input="onInput"
             />
@@ -45,7 +47,8 @@ function onKeydown(e: KeyboardEvent) {
 
 function onInput(e: Event) {
     const target = e.target as HTMLInputElement;
-    const digits = target.value.replace(/\D/g, '');
+    let digits = target.value.replace(/\D/g, '');
+    if (props.max != null) digits = digits.slice(0, Number(props.max));
     if (target.value !== digits) target.value = digits;
     text.value = digits;
 }

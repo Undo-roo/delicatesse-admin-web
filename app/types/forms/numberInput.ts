@@ -6,4 +6,6 @@ export interface NumberInput {
     label?: string;
     baseClass?: string;
     disabled?: boolean;
+    preLabel?: string;
+    max?: number;
 }

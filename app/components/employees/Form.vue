@@ -30,10 +30,9 @@
 					/>
 				</div>
 				<div class="col-span-12 sm:col-span-6">
-					<forms-text-input
+					<forms-mobile-input
 						v-model="form.mobile_number"
 						label="Mobile Number"
-						placeholder="9123456789"
 						:error="errors.mobile_number"
 					/>
 				</div>

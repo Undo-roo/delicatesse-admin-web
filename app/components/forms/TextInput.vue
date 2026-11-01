@@ -2,6 +2,7 @@
     <div :class="baseClass" >
         <label v-if="label" class="font-bold" :for="id">{{ label }}</label>
         <div :class="['base-text-input mt-1 space-x-2 bg-white', errorClass]">
+            <span v-if="preLabel" class="flex-shrink-0 font-bold text-darkGray">{{ preLabel }}</span>
             <Icon v-if="preIcon" :name="preIcon" :class="['size-4 flex-shrink-0', preIconClass]" />
             <input 
                 :id="id"

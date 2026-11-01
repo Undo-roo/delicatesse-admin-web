@@ -4,6 +4,7 @@ import { AuthService } from './endpoints/auth.service'
 import { ProductService } from './endpoints/assets/product.service'
 import { EmployeeService } from './endpoints/manpower/employeeService'
 import { RoleService } from './endpoints/manpower/roleService'
+import { ClientService } from './endpoints/external/clientService'
 
 /** Every endpoint service instance, all built around a single ApiClient. */
 export interface Services {
@@ -12,6 +13,7 @@ export interface Services {
     products: ProductService
     employees: EmployeeService
     roles: RoleService
+    clients: ClientService
 }
 
 /**
@@ -31,6 +33,9 @@ export function createServices(options: ApiClientOptions = {}): Services {
         // manpower
         employees: new EmployeeService(api),
         roles: new RoleService(api),
+
+        // external
+        clients: new ClientService(api),
     }
 }
 

@@ -8,6 +8,7 @@ export interface Employee {
     date_hired?: string;
     date_created: string;
     email: string;
+    avatar?: string;
 }
 
 export interface EmployeeList {

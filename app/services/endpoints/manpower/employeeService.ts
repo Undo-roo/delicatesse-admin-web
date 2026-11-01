@@ -12,4 +12,10 @@ export class EmployeeService extends BaseService<Employee, EmployeeList, Employe
     restore(id: string | number) {
         return this.api.patch<Employee>(this.endpoint(`${id}/restore`))
     }
+
+    uploadAvatar(id: string | number, file: File) {
+        const formData = new FormData()
+        formData.append('avatar', file)
+        return this.api.post<Employee>(this.endpoint(`${id}/avatar`), formData)
+    }
 }
