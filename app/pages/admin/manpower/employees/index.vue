@@ -141,6 +141,7 @@ const tableColumns = [
         label: 'Name',
         cell: ({ row }: any) => h(BaseAvatar, {
             name: row.original.name,
+			src: row.original.avatar,
         }),
     },
     { key: 'email', label: 'Email' },

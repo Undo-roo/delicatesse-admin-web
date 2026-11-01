@@ -1,5 +1,8 @@
 <template>
 	<presets-read-sidebar>
+		<template #avatar>
+			<forms-avatar-input editable />
+		</template>
 	</presets-read-sidebar>
 
 	<clients-form

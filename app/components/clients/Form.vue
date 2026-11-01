@@ -3,7 +3,7 @@
 		<p v-if="generalError" class="px-6 pt-2 text-error font-bold">{{ generalError }}</p>
 
 		<div class="grid grid-cols-12 gap-x-4 gap-y-4 px-6 py-2">
-			<div class="col-span-12 sm:col-span-6">
+			<div class="col-span-12">
 				<forms-text-input
 					v-model="form.company"
 					label="Company"
@@ -26,20 +26,21 @@
 					:error="errors.contact_information"
 				/>
 			</div>
-			<div class="col-span-12 sm:col-span-6">
+			<div class="col-span-12">
 				<forms-text-input
 					v-model="form.email"
 					label="Email"
 					type="email"
 					placeholder="juan@delicatesse.co"
 					:error="errors.email"
+					pre-icon="boxicons:at-filled"
 				/>
 			</div>
 		</div>
 
-		<div class="mt-6 flex justify-end gap-3 border-t border-lightGray px-6 py-4">
-			<forms-button text="Discard Changes" variant="outline" @click="emits('cancel')" />
-			<forms-button type="submit" pre-icon="boxicons:save" :text="isEdit ? 'Update Information' : 'Create Client'" :disabled="loading" />
+		<div class="mt-6 flex justify-end gap-3 px-6 py-4">
+			<forms-button class="w-full" text="Discard Changes" variant="outline" @click="emits('cancel')" />
+			<forms-button class="w-full" type="submit" pre-icon="boxicons:save" :text="isEdit ? 'Update Information' : 'Create Client'" :disabled="loading" />
 		</div>
 	</form>
 </template>

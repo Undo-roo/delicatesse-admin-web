@@ -27,6 +27,7 @@
 						type="email"
 						placeholder="juan.delacruz@delicatesse.ph"
 						:error="errors.email"
+						pre-icon="boxicons:at-filled"
 					/>
 				</div>
 				<div class="col-span-12 sm:col-span-6">
@@ -55,9 +56,9 @@
 				</div>
 			</div>
 
-			<div class="mt-6 flex justify-end gap-3 border-t border-lightGray px-6 py-4">
-				<forms-button text="Discard Changes" variant="outline" @click="emits('cancel')" />
-				<forms-button type="submit" pre-icon="boxicons:save" :text="isEdit ? 'Update Information' : 'Create Employee'" :disabled="loading" />
+			<div class="mt-6 flex justify-end gap-3 px-6 py-4">
+				<forms-button class="w-full" text="Discard Changes" variant="outline" @click="emits('cancel')" />
+				<forms-button class="w-full" type="submit" pre-icon="boxicons:save" :text="isEdit ? 'Update Information' : 'Create Employee'" :disabled="loading" />
 			</div>
 		</div>
 	</form>

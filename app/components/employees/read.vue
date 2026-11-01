@@ -1,10 +1,13 @@
 <template>
-	<presets-read-sidebar
-		:src="employee?.avatar"
-		:name="employeeName"
-		:editable="isUpdating"
-		@change="handleAvatarChange"
-	>
+	<presets-read-sidebar>
+		<template #avatar>
+			<forms-avatar-input
+				:src="employee?.avatar"
+				:name="employeeName"
+				:editable="isUpdating"
+				@change="handleAvatarChange"
+			/>
+		</template>
 		<template #footer>
 			<forms-button 
 				text="Update Information" 

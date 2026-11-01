@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<Button>(), {
 });
 
 const baseStyle = `
-	h-[40px] min-w-[40px] p-2 rounded-lg inline-flex 
+	min-h-[40px] min-w-[40px] p-2 rounded-lg inline-flex 
 	items-center justify-center gap-2 
 	font-medium cursor-pointer transition-colors
 	disabled:cursor-not-allowed disabled:bg-lightGray disabled:text-darkGray disabled:border-none disabled:shadow
