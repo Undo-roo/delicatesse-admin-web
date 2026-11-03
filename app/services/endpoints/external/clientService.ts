@@ -5,7 +5,7 @@ import type { Client, ClientList, ClientPayload } from "~/types/external/client"
 export class ClientService extends BaseService<Client, ClientList, ClientPayload, ClientPayload>
 {
     constructor(api: ApiClient) {
-        super(api, 'clients')
+        super(api, 'external/clients')
     }
 
     restore(id: string | number) {

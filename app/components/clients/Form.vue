@@ -20,9 +20,10 @@
 				/>
 			</div>
 			<div class="col-span-12 sm:col-span-6">
-				<forms-mobile-input
+				<forms-text-input
 					v-model="form.contact_information"
-					label="Mobile Number"
+					label="Contact Information"
+					placeholder="9123492367, 887000, some@gmail.com"
 					:error="errors.contact_information"
 				/>
 			</div>

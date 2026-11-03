@@ -43,7 +43,7 @@
 		<div class="flex flex-1 mt-2 justify-between">
 			<div class="flex">
 				<!-- Dnyamic filter here -->
-				<forms-button class="w-[266px]" variant="outline" pre-icon="boxicons:plus-filled" text="Add Filter" @click="onClear" />
+				<forms-button v-if="hasFilter" class="w-[266px]" variant="outline" pre-icon="boxicons:plus-filled" text="Add Filter" @click="onClear" />
 			</div>
 
 			<slot name="actions" />
@@ -57,6 +57,8 @@ import type { Filter } from '~/types/forms/filter';
 withDefaults(defineProps<Filter>(), {
     placeholder: 'Search',
     tabs: () => [],
+    tab: '',
+	hasFilter: false,
 });
 
 const emit = defineEmits<{

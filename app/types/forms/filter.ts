@@ -6,6 +6,7 @@ export interface FilterTab {
 export interface Filter {
     placeholder?: string;
     disabled?: boolean;
+    hasFilter?: boolean;
     baseClass?: string;
     tabs?: FilterTab[];
     tab?: string;

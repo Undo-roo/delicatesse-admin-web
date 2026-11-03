@@ -2,6 +2,7 @@ import { ApiClient } from './api'
 import type { ApiClientOptions } from './api'
 import { AuthService } from './endpoints/auth.service'
 import { ProductService } from './endpoints/assets/product.service'
+import { TruckService } from './endpoints/assets/truckService'
 import { EmployeeService } from './endpoints/manpower/employeeService'
 import { RoleService } from './endpoints/manpower/roleService'
 import { ClientService } from './endpoints/external/clientService'
@@ -11,6 +12,7 @@ export interface Services {
     api: ApiClient
     auth: AuthService
     products: ProductService
+    trucks: TruckService
     employees: EmployeeService
     roles: RoleService
     clients: ClientService
@@ -29,6 +31,7 @@ export function createServices(options: ApiClientOptions = {}): Services {
 
         // assets
         products: new ProductService(api),
+        trucks: new TruckService(api),
 
         // manpower
         employees: new EmployeeService(api),
