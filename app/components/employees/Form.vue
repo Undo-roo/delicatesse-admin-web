@@ -20,14 +20,13 @@
 						:error="errors.last_name"
 					/>
 				</div>
-				<div class="col-span-12">
-					<forms-text-input
-						v-model="form.email"
-						label="Email"
-						type="email"
-						placeholder="juan.delacruz@delicatesse.ph"
-						:error="errors.email"
-						pre-icon="boxicons:at-filled"
+				<div class="col-span-12 sm:col-span-6">
+					<forms-select
+						v-model="role"
+						:options="roleOptions"
+						label="Role"
+						placeholder="Select a role"
+						:error="errors.role_id"
 					/>
 				</div>
 				<div class="col-span-12 sm:col-span-6">
@@ -45,13 +44,19 @@
 						:error="errors.date_hired"
 					/>
 				</div>
+				<presets-read-card-content 
+					class="col-span-6"
+					label="Date Hired" 
+					:content="employee?.date_hired" 
+				/>
 				<div class="col-span-12">
-					<forms-select
-						v-model="role"
-						:options="roleOptions"
-						label="Role"
-						placeholder="Select a role"
-						:error="errors.role_id"
+					<forms-text-input
+						v-model="form.email"
+						label="Email"
+						type="email"
+						placeholder="juan.delacruz@delicatesse.ph"
+						:error="errors.email"
+						pre-icon="boxicons:at-filled"
 					/>
 				</div>
 			</div>

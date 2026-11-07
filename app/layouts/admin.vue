@@ -2,7 +2,7 @@
     <div>
         <div class="min-h-screen bg-[#F4F4F4]">
             <layout-header />
-            <main class="h-[calc(100vh-160px)] overflow-y-scroll px-[42px] py-10">
+            <main class="h-[calc(100vh-160px)] overflow-y-scroll px-4 py-6 sm:px-6 lg:px-[42px] lg:py-10">
                 <!-- Page header: breadcrumbs + actions on top, filter/tabs underneath -->
                 <div v-if="hasHeader" class="flex w-full flex-col gap-4">
                     <div v-if="breadcrumbs.length || $slots.actions" class="flex w-full items-center justify-between gap-x-10">

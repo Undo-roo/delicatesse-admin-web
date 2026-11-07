@@ -5,7 +5,7 @@ import type { Truck, TruckList, TruckPayload } from "~/types/assets/truck";
 export class TruckService extends BaseService<Truck, TruckList, TruckPayload, TruckPayload>
 {
     constructor(api: ApiClient) {
-        super(api, 'trucks')
+        super(api, 'assets/trucks')
     }
 
     // Trucks create/update are multipart/form-data (the avatar is uploaded

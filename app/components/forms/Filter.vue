@@ -18,8 +18,8 @@
             </div>
 
             <!-- Search + buttons -->
-            <div class="flex flex-1 gap-x-4">
-                <div class="flex min-h-[40px] flex-1 items-center gap-4 rounded-lg bg-white px-3 shadow">
+            <div class="flex flex-1 flex-wrap gap-x-4 gap-y-2">
+                <div class="flex min-h-[40px] min-w-[200px] flex-1 items-center gap-4 rounded-lg bg-white px-3 shadow">
                     <Icon name="boxicons:search" class="size-8 flex-shrink-0 text-primary" />
                     <input
                         type="text"
@@ -40,10 +40,10 @@
         </div>
 
 		<!-- Search + buttons -->
-		<div class="flex flex-1 mt-2 justify-between">
+		<div class="flex flex-1 flex-wrap mt-2 justify-between gap-2">
 			<div class="flex">
 				<!-- Dnyamic filter here -->
-				<forms-button v-if="hasFilter" class="w-[266px]" variant="outline" pre-icon="boxicons:plus-filled" text="Add Filter" @click="onClear" />
+				<forms-button v-if="hasFilter" class="w-full sm:w-[266px]" variant="outline" pre-icon="boxicons:plus-filled" text="Add Filter" @click="onClear" />
 			</div>
 
 			<slot name="actions" />
