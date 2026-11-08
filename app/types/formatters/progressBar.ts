@@ -10,4 +10,6 @@ export interface ProgressBar {
     showRatio?: boolean;
     showPercentage?: boolean;
     showBar?: boolean;
+    
+    barClass?: string;
 }

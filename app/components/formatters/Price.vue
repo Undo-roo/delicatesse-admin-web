@@ -1,6 +1,6 @@
 <template>
     <span class="inline-flex items-center gap-2 px-1 py-2">
-        <span class="font-bold text-gray">{{ currency }}</span>
+        <span class="font-bold text-gray text-right">{{ currency }}</span>
         <Icon v-if="variant === 'decrease'" name="boxicons:minus" class="size-4 text-status-red" />
         <Icon v-if="variant === 'increase'" name="boxicons:plus" class="size-4 text-status-green" />
         <span class="font-bold text-black">{{ value }}</span>

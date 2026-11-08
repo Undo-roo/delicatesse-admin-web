@@ -2,10 +2,10 @@ import { ApiClient } from './api'
 import type { ApiClientOptions } from './api'
 import { AuthService } from './endpoints/auth.service'
 import { ProductService } from './endpoints/assets/product.service'
-import { TruckService } from './endpoints/assets/truckService'
-import { EmployeeService } from './endpoints/manpower/employeeService'
-import { RoleService } from './endpoints/manpower/roleService'
-import { ClientService } from './endpoints/external/clientService'
+import { TruckService } from './endpoints/assets/truck.service'
+import { EmployeeService } from './endpoints/manpower/employee.service'
+import { RoleService } from './endpoints/manpower/role.service'
+import { ClientService } from './endpoints/external/client.service'
 
 /** Every endpoint service instance, all built around a single ApiClient. */
 export interface Services {

@@ -8,6 +8,10 @@ export interface DataTableCellContext {
 export interface DataTableColumn {
     key: string;
     label?: string;
+    /** Max width for the column in px (applies to header + cells). */
+    maxWidth?: number;
+    /** Extra classes applied to the column's header and cells (e.g. 'text-right'). */
+    class?: string;
     /** Custom cell renderer — pass a component here, e.g. `cell: ({ row }) => h(StatusPill, { text: row.original.status })`. */
     cell?: (ctx: DataTableCellContext) => unknown;
 }

@@ -8,8 +8,9 @@
                         <th
                             v-for="header in headerGroup.headers"
                             :key="header.id"
-                            class="border-r-1 border-white bg-primary px-4 py-3 text-left text-sm font-bold text-white select-none first:rounded-tl last:rounded-tr"
-                            :class="{ 'cursor-pointer': header.column.getCanSort() }"
+                            class="border-r-1 border-white bg-primary px-4 py-3 text-sm font-bold text-white select-none first:rounded-tl last:rounded-tr"
+                            :class="[header.column.getCanSort() ? 'cursor-pointer' : '', colClass(header.column.columnDef)]"
+                            :style="colStyle(header.column.columnDef)"
                             @click="header.column.toggleSorting()"
                         >
                             <div class="flex items-center gap-1 text-sm">
@@ -32,6 +33,8 @@
                             v-for="cell in row.getVisibleCells()"
                             :key="cell.id"
                             class="p-5 font-normal text-black"
+                            :class="colClass(cell.column.columnDef)"
+                            :style="colStyle(cell.column.columnDef)"
                         >
                             <FlexRender v-if="cell.column.columnDef.cell" :render="cell.column.columnDef.cell" :props="cell.getContext()" />
                             <span v-else>{{ cell.getValue() }}</span>
@@ -89,11 +92,28 @@ const props = withDefaults(defineProps<DataTable>(), {
     showRestore: false,
 })
 
-const columnDefs = props.columns.map((c) => ({
-    accessorKey: c.key,
-    header: c.label ?? c.key,
-    ...(c.cell ? { cell: c.cell } : {}),
-}))
+const columnDefs = props.columns.map((c) => {
+    const meta: Record<string, unknown> = {};
+    if (c.maxWidth != null) meta.maxWidth = c.maxWidth;
+    if (c.class) meta.class = c.class;
+    return {
+        accessorKey: c.key,
+        header: c.label ?? c.key,
+        ...(c.cell ? { cell: c.cell } : {}),
+        ...(Object.keys(meta).length ? { meta } : {}),
+    };
+})
+
+// Optional per-column max width, read from the TanStack column `meta`.
+function colStyle(columnDef: any): Record<string, string> | undefined {
+    const w = columnDef?.meta?.maxWidth;
+    return w != null ? { maxWidth: `${w}px` } : undefined;
+}
+
+// Optional per-column class (falls back to left-aligned when unset).
+function colClass(columnDef: any): string {
+    return columnDef?.meta?.class ?? 'text-left';
+}
 
 const columnsCount = computed(() => props.columns.length + +props.hasActions)
 

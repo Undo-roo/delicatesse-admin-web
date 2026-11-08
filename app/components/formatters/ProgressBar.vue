@@ -2,13 +2,13 @@
     <div class="w-full text-black">
         <div v-if="showLabel || showRatio || showPercentage" class="flex items-center gap-1.5 mb-1">
             <Icon v-if="showIcon && showLabel" name="boxicons:list-ul" class="size-4" />
-            <span v-if="showLabel" class="text-[10px] font-normal leading-[1.25]">{{ label }}</span>
-            <span v-if="showRatio" class="text-[10px] font-bold leading-[1.25]">{{ current }} / {{ total }}</span>
-            <span v-if="showPercentage" class="ml-auto text-[8px] font-bold leading-[10px]" :class="variantClass.text">{{ pct }}%</span>
+            <span v-if="showLabel" class="font-normal">{{ label }}</span>
+            <span v-if="showRatio" class="font-bold">{{ current }} / {{ total }}</span>
+            <span v-if="showPercentage" class="ml-auto font-bold" :class="variantClass.text">{{ pct }}%</span>
         </div>
 
-        <div v-if="showBar" class="w-full h-[14px] rounded-[2px] overflow-hidden" :class="variantClass.track">
-            <div class="h-full rounded-[2px]" :class="variantClass.fill" :style="{ width: pct + '%' }"></div>
+        <div v-if="showBar" class="w-full h-[14px] rounded overflow-hidden mt-2" :class="[variantClass.track, barClass]">
+            <div class="h-full rounded" :class="variantClass.fill" :style="{ width: pct + '%' }"></div>
         </div>
     </div>
 </template>
@@ -26,6 +26,7 @@ const props = withDefaults(defineProps<ProgressBar>(), {
     showRatio: true,
     showPercentage: true,
     showBar: true,
+	barClass: '',
 });
 
 const pct = computed(() => {
