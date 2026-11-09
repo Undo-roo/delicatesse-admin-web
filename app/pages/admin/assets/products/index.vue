@@ -37,15 +37,15 @@
 			}"
 			@restore="row => {
 				activeProduct = row;
-				actionModal.title = `Restore ${activeProduct?.plate_number}?`;
-				actionModal.message = 'Truck\'s data will now be accessible to the system';
+				actionModal.title = `Restore ${activeProduct?.name}?`;
+				actionModal.message = 'Product\'s data will now be accessible to the system';
 				actionModal.variant = 'info';
 				actionDialogOpen = true;
 			}"
 		/>
 		
 		<modals-sheet v-model="sheetOpen" side="bottom" title="PRODUCT INFORMATION">
-			<trucks-read :id="activeProduct?.id" @delete="promptArchive" />
+			<products-read :id="activeProduct?.id" @delete="promptArchive" />
 		</modals-sheet>
 
 		<modals-confirmation 
@@ -62,7 +62,7 @@
 			side="bottom" 
 			:title="'Create Product'"
 		>
-			<trucks-create-sheet
+			<products-create-sheet
 				:open="createSheetOpen"
 				@saved="onSaved"
 				@cancel="createSheetOpen = false"
@@ -75,10 +75,8 @@
 import BaseAvatar from '~/components/formatters/BaseAvatar.vue';
 import Price from '~/components/formatters/Price.vue';
 import ProgressBar from '~/components/formatters/ProgressBar.vue';
-import StatusPill from '~/components/formatters/StatusPill.vue';
-import { InventoryStatus } from '~/types/assets/product';
+import { InventoryStatus, type Product } from '~/types/assets/product';
 import type { ProgressBarVariant } from '~/types/formatters/progressBar';
-import type { StatusPillVariant } from '~/types/formatters/statusPill';
 type Variant = 'destructive' | 'success' | 'warning' | 'info'
 
 const { rows, meta, status, search, page, tab, refresh } = useProducts();
@@ -89,13 +87,6 @@ const tabs = [
 	{ label: 'Archived', value: 'archived' },
 ];
 
-const statusMeta: Record<string, { label: string; variant: StatusPillVariant }> = {
-	draft: { label: 'Draft', variant: 'gray' },
-	available: { label: 'Available', variant: 'green' },
-	in_transit: { label: 'In Transit', variant: 'blue' },
-	defective: { label: 'Defective', variant: 'red' },
-};
-
 function onSearch(q: string) {
 	search.value = q;
 }
@@ -104,7 +95,7 @@ function onClear() {
 	search.value = '';
 }
 
-const activeProduct = ref();
+const activeProduct = ref<Product>();
 
 const sheetOpen = ref(false);
 const actionDialogOpen = ref(false);
@@ -126,22 +117,22 @@ const actionModal = ref<{title: string, message: string, variant: Variant }>({
 });
 
 function promptArchive() {
-	actionModal.value.title = `Archive ${activeProduct.value?.plate_number}?`;
-	actionModal.value.message = "Temporarily the truck's data is inaccessible and prohibits them from accessing the system until restored";
+	actionModal.value.title = `Archive ${activeProduct.value?.name}?`;
+	actionModal.value.message = "Temporarily the product's data is inaccessible and prohibits them from accessing the system until restored";
 	actionModal.value.variant = 'destructive';
 	actionDialogOpen.value = true;
 }
 
 const handleActions = async () => {
-	const truck = activeProduct.value;
+	const product = activeProduct.value;
 
-	if(!truck || loading.value) {
+	if(!product || loading.value) {
 		actionDialogOpen.value = false;
 		return;
 	}
 
-	if(actionModal.value.variant === 'destructive') await archive(truck.id);
-	else await restore(truck.id);
+	if(actionModal.value.variant === 'destructive') await archive(product.id);
+	else await restore(product.id);
 
 	actionDialogOpen.value = false;
 	sheetOpen.value = false;
@@ -207,7 +198,11 @@ const tableColumns = [
             value: row.original.revenue,
         }),
     },
-    { key: 'created_at', label: 'Date Created' },
+    { 
+		key: 'created_at', 
+		label: 'Date Created',
+        maxWidth: 80,
+	},
 ];
 
 onMounted(refresh);

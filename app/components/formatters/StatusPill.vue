@@ -11,7 +11,7 @@ import type { StatusPill } from '~/types/formatters/statusPill';
 const props = withDefaults(defineProps<StatusPill>(), {
     text: 'Category',
     variant: 'default',
-    showIcon: true,
+    showIcon: false,
 });
 
 const baseStyle = 'inline-flex items-center gap-2 px-2 py-1 rounded-full w-fit min-h-[22px] text-[12px] font-normal leading-[1.25]';

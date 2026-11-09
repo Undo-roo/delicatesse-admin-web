@@ -123,7 +123,6 @@ withDefaults(defineProps<Header>(), {
             label: 'Assets',
             children: [
                 { label: 'Products', to: '/admin/assets/products' },
-                { label: 'Inventory', to: '/admin/assets/inventory' },
                 { label: 'Trucks', to: '/admin/assets/trucks' },
             ],
         },

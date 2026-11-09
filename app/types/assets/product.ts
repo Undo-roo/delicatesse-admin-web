@@ -9,6 +9,16 @@ export enum InventoryStatus {
     IN_STOCK = "in_stock",
 }
 
+export interface ProductNutritionalFacts {
+    src: string;
+    filename: string;
+    media_type: string;
+    size: number,
+    width: number,
+    height: number
+    size_display: string,
+}
+
 // A truck (asset domain). `status` is one of: draft, available, in_transit, defective.
 export interface Product {
     id: string;
@@ -19,8 +29,9 @@ export interface Product {
     vat_included: boolean;
     uom?: string;
     categories: string;
+    category_ids: number[];
     description?: string;
-    nutritional_facts_url?: string;
+    nutritional_facts_url?: ProductNutritionalFacts;
     images: string[];
 }
 
@@ -35,10 +46,15 @@ export interface ProductList {
     revenue: number;
 }
 
-// Trucks create/update via multipart form data (avatar uploaded inline).
+// Product create/update payload (JSON). Images and nutritional facts are
+// uploaded via separate endpoints, not embedded here.
 export interface ProductPayload {
-    plate_number: string;
-    owned_at: string;
-    status?: string;
-    avatar?: File;
+    name: string;
+    slug: string;
+    description?: string | null;
+    sku: string;
+    price: number | string;
+    uom?: string | null;
+    vat_included: boolean;
+    category_ids: number[];
 }

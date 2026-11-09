@@ -1,6 +1,6 @@
 <template>
-	<div>
-		<label class="text-gray font-bold" :for="'card-'+label">{{ label }}</label>
+	<div class="space-y-2">
+		<label class="text-gray font-bold block" :for="'card-'+label">{{ label }}</label>
 		<slot>
         	<p class="font-bold">{{ content }}</p>
 		</slot>

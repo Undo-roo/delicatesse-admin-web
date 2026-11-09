@@ -41,9 +41,9 @@ export function useProductActions() {
         }
     }
 
-    const archive = (id: string | number) => run(() => products.destroy(id), 'Truck archived', ['products'])
+    const archive = (id: string | number) => run(() => products.destroy(id), 'Product archived', ['products'])
 
-    const restore = (id: string | number) => run(() => products.restore(id), 'Truck restored', ['products'])
+    const restore = (id: string | number) => run(() => products.restore(id), 'Product restored', ['products'])
 
     return { loading, archive, restore }
 }
