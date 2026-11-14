@@ -23,21 +23,10 @@
                 <slot />
             </main>
         </div>
-
-        <modals-toast
-            v-model="toast.isOpen"
-            :position="toast.position"
-            :variant="toast.variant"
-            :title="toast.title"
-            :description="toast.description"
-            :show-close="toast.showClose"
-        />
     </div>
 </template>
 
 <script setup lang="ts">
-const { toast } = useToast()
-
 const props = withDefaults(defineProps<{ breadcrumbs?: string[] }>(), {
     breadcrumbs: () => [],
 })

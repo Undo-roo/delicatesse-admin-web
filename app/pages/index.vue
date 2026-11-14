@@ -47,14 +47,13 @@
                     />
                 </div>
 
-                <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:gap-6">
-                    <button
-                        type="submit"
-                        class="h-14 flex-1 cursor-pointer rounded-md bg-[#F4F4F4] text-xl font-bold uppercase text-primary transition-colors hover:bg-white"
-                    >
-                        Sign In
-                    </button>
-                </div>
+				<button
+					type="submit"
+					:disabled="loading"
+					class="h-10 py-3 flex-1 cursor-pointer rounded-md bg-[#F4F4F4] text-xl font-bold uppercase text-primary transition-colors hover:bg-white disabled:cursor-not-allowed disabled:opacity-60"
+				>
+					{{ loading ? 'Signing in…' : 'Sign In' }}
+				</button>
             </form>
         </div>
     </div>
@@ -63,11 +62,26 @@
 <script lang="ts" setup>
 const email = ref('');
 const password = ref('');
+const loading = ref(false);
 
-function onSignIn() {
-    // TODO: wire to auth — const { auth } = useApi(); await auth.login({ email, password })
-    console.log('sign in', { email: email.value, password: password.value });
-    navigateTo('admin')
+const { login } = useAuth();
+const { error } = useToast();
+
+async function onSignIn() {
+    if (loading.value) return;
+    loading.value = true;
+    try {
+        await login(email.value, password.value);
+        await navigateTo('/admin');
+    } catch (e) {
+        if ((e as any)?.status === 401) {
+            error('Invalid email or password.', 'Sign in failed');
+        } else {
+            error('Unable to sign in. Please try again.', 'Sign in failed');
+        }
+    } finally {
+        loading.value = false;
+    }
 }
 </script>
 

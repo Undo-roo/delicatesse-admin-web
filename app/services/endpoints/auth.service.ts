@@ -1,10 +1,13 @@
 import { BaseService } from '../base-service'
 import type { ApiClient } from '../api'
 
+/** The authenticated employee, as returned by `GET /auth/me`. */
 export interface AuthUser {
-    id: string
-    name: string
+    id: number
+    first_name: string
+    last_name: string
     email: string
+    status: string
 }
 
 export interface LoginPayload {
@@ -12,9 +15,20 @@ export interface LoginPayload {
     password: string
 }
 
-export interface LoginResponse {
-    token: string
-    user: AuthUser
+/**
+ * A server-side session. The `id` is what the frontend stores as the "token"
+ * and sends back as `Authorization: Bearer <id>`.
+ */
+export interface Session {
+    id: string
+    employee_id: number
+    expires_at: string
+    is_revoked: boolean
+}
+
+export interface MeResponse {
+    authenticated: boolean
+    employee: AuthUser | null
 }
 
 export class AuthService extends BaseService<AuthUser> {
@@ -23,14 +37,14 @@ export class AuthService extends BaseService<AuthUser> {
     }
 
     login(payload: LoginPayload) {
-        return this.api.post<LoginResponse>('auth/login', payload)
+        return this.api.post<Session>('auth/login', payload)
     }
 
-    logout() {
-        return this.api.post<void>('auth/logout')
+    logout(sessionId: string) {
+        return this.api.post<void>(`auth/logout/${sessionId}`)
     }
 
     me() {
-        return this.api.get<AuthUser>('auth/me')
+        return this.api.get<MeResponse>('auth/me')
     }
 }

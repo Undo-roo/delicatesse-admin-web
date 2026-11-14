@@ -16,7 +16,7 @@ export default defineNuxtPlugin((nuxtApp) => {
             // (without the token check, a wrong password on the login form would also land here)
             if (err.status === 401 && token.value) {
                 token.value = null
-                await nuxtApp.runWithContext(() => navigateTo('/admin/login'))
+                await nuxtApp.runWithContext(() => navigateTo('/'))
                 return
             }
 

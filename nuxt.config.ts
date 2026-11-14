@@ -8,9 +8,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // Private (server-only) — never sent to the browser.
     apiSecret: '',
-    // Public (exposed to the browser) — override with NUXT_PUBLIC_API_BASE.
+    // Public (exposed to the browser) — override with NUXT_PUBLIC_*.
     public: {
       apiBase: process.env.ADMIN_API_LINK,
+      // Toggle to bypass the auth guard for local testing.
+      authDisabled: process.env.ADMIN_AUTH_DISABLED === 'true',
     },
   },
 })
